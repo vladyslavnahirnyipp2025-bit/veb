@@ -1,0 +1,17 @@
+# Залежності та збірка (на випадок переходу на Tailwind CLI)
+node_modules/
+dist/
+
+# Системні файли
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Редактор і тимчасові файли
+.vscode/
+*.log
+*.tmp
+
+# Секрети (ніколи не комітити)
+.env
+.env.*
