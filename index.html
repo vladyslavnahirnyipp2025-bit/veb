@@ -62,29 +62,29 @@
   <!-- Посилання для користувачів клавіатури та скрінрідерів -->
   <a class="sr-only rounded-lg bg-brand px-4 py-2 font-semibold text-ink focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50" href="#main">Перейти до основного вмісту</a>
 
-  <!-- ШАПКА: sticky, на мобільному логотип + гамбургер, від md горизонтальна навігація -->
+  <!-- ШАПКА: sticky, до lg логотип + гамбургер, від lg горизонтальна навігація -->
   <header class="sticky top-0 z-40 border-b border-line bg-ink/95 backdrop-blur">
-    <div class="mx-auto flex w-full max-w-[1200px] flex-wrap items-center justify-between gap-x-8 gap-y-4 px-4 py-4 md:min-h-20">
+    <div class="mx-auto flex w-full max-w-[1200px] flex-wrap items-center justify-between gap-x-6 gap-y-4 px-4 py-4 md:min-h-20">
       <a class="inline-flex items-center gap-3" href="#top">
         <!-- Знак логотипа декоративний: назва бренду продубльована текстом поруч, тому alt порожній -->
         <img class="size-10" src="assets/images/logo.svg" alt="" width="40" height="40">
         <span class="font-heading text-2xl font-bold text-slate-50">Потік монет</span>
       </a>
 
-      <button id="menu-toggle" type="button" class="inline-flex size-11 items-center justify-center rounded-lg border border-line text-slate-50 transition-colors hover:bg-card md:hidden" aria-expanded="false" aria-controls="site-menu" aria-label="Відкрити меню">
+      <button id="menu-toggle" type="button" class="inline-flex size-11 items-center justify-center rounded-lg border border-line text-slate-50 transition-colors hover:bg-card lg:hidden" aria-expanded="false" aria-controls="site-menu" aria-label="Відкрити меню">
         <i class="fa-solid fa-bars text-xl" aria-hidden="true"></i>
       </button>
 
-      <div id="site-menu" class="hidden basis-full flex-col gap-4 md:flex md:basis-auto md:flex-1 md:flex-row md:items-center md:justify-end md:gap-8">
+      <div id="site-menu" class="hidden basis-full flex-col gap-4 lg:flex lg:basis-auto lg:flex-1 lg:flex-row lg:items-center lg:justify-end lg:gap-6 xl:gap-8">
         <nav aria-label="Головна навігація">
-          <ul class="flex flex-col gap-1 md:flex-row md:gap-8">
+          <ul class="flex flex-col gap-1 lg:flex-row lg:gap-6 xl:gap-8">
             <li><a class="block py-2 text-slate-400 transition-colors hover:text-slate-50" href="#benefits">Переваги</a></li>
             <li><a class="block py-2 text-slate-400 transition-colors hover:text-slate-50" href="#how">Як це працює</a></li>
             <li><a class="block py-2 text-slate-400 transition-colors hover:text-slate-50" href="#simulator">Симулятор</a></li>
             <li><a class="block py-2 text-slate-400 transition-colors hover:text-slate-50" href="#contacts">Контакти</a></li>
           </ul>
         </nav>
-        <a class="inline-flex min-h-11 w-full items-center justify-center rounded-full bg-brand px-8 py-3 text-lg font-semibold text-ink transition-colors duration-150 hover:bg-brand-hover hover:shadow-soft active:bg-brand-pressed active:shadow-none md:w-auto" href="#simulator">Спробувати симулятор</a>
+        <a class="inline-flex min-h-11 w-full items-center justify-center rounded-full bg-brand px-8 py-3 text-lg font-semibold text-ink lg:px-6 xl:px-8 transition-colors duration-150 hover:bg-brand-hover hover:shadow-soft active:bg-brand-pressed active:shadow-none lg:w-auto" href="#simulator">Спробувати симулятор</a>
       </div>
     </div>
   </header>
@@ -247,7 +247,7 @@
           <iframe class="size-full border-0"
             src="https://www.youtube-nocookie.com/embed/DTxUG28dq4c"
             title="Відео про особисте планування бюджету та заощадження"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             referrerpolicy="strict-origin-when-cross-origin"
             allowfullscreen
             loading="lazy"></iframe>
