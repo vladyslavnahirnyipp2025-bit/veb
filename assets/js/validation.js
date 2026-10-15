@@ -174,6 +174,48 @@ agreementInput.addEventListener('change', () => {
   validateAgreement();
 });
 
+// ---------- Модальне вікно успіху ----------
+const successModal = document.getElementById('successModal');
+const closeModalBtn = document.getElementById('closeModalBtn');
+let lastFocusedElement = null; // куди повернути фокус після закриття
+
+function isModalOpen() {
+  return !successModal.classList.contains('hidden');
+}
+
+function openModal() {
+  lastFocusedElement = document.activeElement;
+  successModal.classList.remove('hidden');
+  successModal.classList.add('flex'); // у Tailwind видимість керується класами hidden / flex
+  document.body.classList.add('overflow-hidden'); // блокуємо прокрутку сторінки під вікном
+  closeModalBtn.focus();
+}
+
+function closeModal() {
+  successModal.classList.add('hidden');
+  successModal.classList.remove('flex');
+  document.body.classList.remove('overflow-hidden');
+  if (lastFocusedElement) lastFocusedElement.focus();
+}
+
+closeModalBtn.addEventListener('click', closeModal);
+
+// Клік по затемненому фону закриває вікно; клік усередині картки ігнорується,
+// бо event.target у такому випадку не дорівнює самому оверлею
+successModal.addEventListener('click', (event) => {
+  if (event.target === successModal) closeModal();
+});
+
+document.addEventListener('keydown', (event) => {
+  if (!isModalOpen()) return;
+  if (event.key === 'Escape') closeModal();
+  // У вікні одна кнопка: Tab не повинен виводити фокус на сторінку під ним
+  if (event.key === 'Tab') {
+    event.preventDefault();
+    closeModalBtn.focus();
+  }
+});
+
 // ---------- Успішне завершення ----------
 function handleSuccess() {
   form.reset();
@@ -187,6 +229,7 @@ function handleSuccess() {
 // ---------- Надсилання форми ----------
 form.addEventListener('submit', (event) => {
   event.preventDefault(); // не перезавантажувати сторінку
+  if (isModalOpen()) return; // захист від повторного натискання, поки вікно відкрите
 
   // Нормалізуємо телефон до перевірки: користувач міг натиснути Enter, не виходячи з поля
   phoneInput.value = normalizePhone(phoneInput.value);
@@ -205,4 +248,5 @@ form.addEventListener('submit', (event) => {
 
   // Реального надсилання на сервер немає: це демонстрація успішної клієнтської валідації
   handleSuccess();
+  openModal();
 });
