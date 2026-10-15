@@ -7,6 +7,10 @@ const REGEX_EMAIL = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 // +380 і рівно 9 цифр: +380501234567
 const REGEX_PHONE = /^\+380\d{9}$/;
 
+// Ім'я: літери (будь-якої мови), пробіл, апостроф, крапка, дефіс; починається з літери.
+// Цифри, емодзі й HTML-теги (< >) не проходять
+const REGEX_NAME = /^[\p{L}\p{M}][\p{L}\p{M}'’ʼ .-]*$/u;
+
 const NAME_MIN = 2;
 const NAME_MAX = 50;
 const MESSAGE_MIN = 10;
@@ -96,6 +100,10 @@ function validateName() {
   }
   if (value.length > NAME_MAX) {
     showError(nameInput, `Ім'я не може бути довшим за ${NAME_MAX} символів.`);
+    return false;
+  }
+  if (!REGEX_NAME.test(value)) {
+    showError(nameInput, "Ім'я може містити лише літери, пробіл, апостроф і дефіс.");
     return false;
   }
   showSuccess(nameInput);
