@@ -297,22 +297,47 @@
       <div class="mx-auto grid w-full max-w-[1200px] gap-12 px-4 lg:grid-cols-2 lg:gap-16">
 
         <div id="plan">
-          <h2 class="mb-8 font-heading text-2xl font-semibold md:text-3xl lg:text-[2rem]" id="plan-title">Отримайте свій план накопичень на пошту</h2>
-          <form class="grid justify-items-start gap-6" action="#" method="post">
-            <div class="grid w-full gap-2">
-              <label class="font-semibold" for="name">Ім'я</label>
-              <input class="min-h-11 w-full rounded-lg border border-line bg-card px-4 py-3 text-slate-50 transition-colors focus:border-brand" type="text" id="name" name="name" autocomplete="given-name" minlength="2" required>
+          <h2 class="mb-4 font-heading text-2xl font-semibold md:text-3xl lg:text-[2rem]" id="plan-title">Зворотний зв'язок</h2>
+          <p class="mb-8 text-slate-600">Залиште повідомлення, і ми надішлемо план накопичень на вашу пошту.</p>
+
+          <!-- Форма зворотного зв'язку: семантичні label/for, окремі області для помилок -->
+          <form id="feedbackForm" class="grid grid-cols-1 gap-6 md:grid-cols-2" action="#" method="post" novalidate>
+            <div class="grid content-start gap-2">
+              <label class="font-semibold" for="username">Ім'я</label>
+              <input class="min-h-11 w-full rounded-lg border border-line bg-card px-4 py-3 text-slate-50 transition-colors focus:border-brand" type="text" id="username" name="username" autocomplete="given-name" required aria-describedby="nameError" aria-invalid="false">
+              <p class="hidden text-sm text-red-700" id="nameError" role="alert"></p>
             </div>
-            <div class="grid w-full gap-2">
-              <label class="font-semibold" for="email">Email</label>
-              <input class="min-h-11 w-full rounded-lg border border-line bg-card px-4 py-3 text-slate-50 transition-colors placeholder:text-slate-400 focus:border-brand" type="email" id="email" name="email" autocomplete="email" placeholder="name@domain.com" required aria-describedby="email-hint">
-              <p class="text-xs text-slate-600" id="email-hint">Вкажіть адресу, на яку надіслати розрахунок.</p>
+
+            <div class="grid content-start gap-2">
+              <label class="font-semibold" for="email">Електронна пошта</label>
+              <input class="min-h-11 w-full rounded-lg border border-line bg-card px-4 py-3 text-slate-50 transition-colors focus:border-brand" type="email" id="email" name="email" autocomplete="email" inputmode="email" required aria-describedby="emailError" aria-invalid="false">
+              <p class="hidden text-sm text-red-700" id="emailError" role="alert"></p>
             </div>
-            <div class="flex w-full items-center gap-3">
-              <input class="size-6 accent-brand" type="checkbox" id="consent" name="consent" required>
-              <label for="consent">Погоджуюсь з <a class="text-brand-strong underline" href="#privacy">політикою конфіденційності</a></label>
+
+            <div class="grid content-start gap-2 md:col-span-2">
+              <label class="font-semibold" for="phone">Телефон</label>
+              <input class="min-h-11 w-full rounded-lg border border-line bg-card px-4 py-3 text-slate-50 transition-colors focus:border-brand" type="tel" id="phone" name="phone" autocomplete="tel" inputmode="tel" required aria-describedby="phoneHint phoneError" aria-invalid="false">
+              <p class="text-xs text-slate-600" id="phoneHint">Формат: +380XXXXXXXXX. Пробіли, дужки й дефіси буде прибрано автоматично.</p>
+              <p class="hidden text-sm text-red-700" id="phoneError" role="alert"></p>
             </div>
-            <button class="inline-flex min-h-11 w-full items-center justify-center rounded-full bg-brand px-8 py-3 text-lg font-semibold text-ink transition-colors duration-150 hover:bg-brand-hover hover:shadow-soft active:bg-brand-pressed active:shadow-none md:w-auto" type="submit">Надіслати розрахунок на пошту</button>
+
+            <div class="grid content-start gap-2 md:col-span-2">
+              <label class="font-semibold" for="message">Повідомлення</label>
+              <textarea class="min-h-11 w-full rounded-lg border border-line bg-card px-4 py-3 text-slate-50 transition-colors focus:border-brand min-h-32 resize-y" id="message" name="message" rows="4" required aria-describedby="messageError" aria-invalid="false"></textarea>
+              <p class="hidden text-sm text-red-700" id="messageError" role="alert"></p>
+            </div>
+
+            <div class="grid content-start gap-2 md:col-span-2">
+              <div class="flex items-center gap-3">
+                <input class="size-6 shrink-0 accent-brand" type="checkbox" id="agreement" name="agreement" required aria-describedby="agreementError" aria-invalid="false">
+                <label for="agreement">Погоджуюсь з <a class="text-brand-strong underline" href="#privacy">політикою конфіденційності</a></label>
+              </div>
+              <p class="hidden text-sm text-red-700" id="agreementError" role="alert"></p>
+            </div>
+
+            <div class="md:col-span-2">
+              <button id="submitBtn" class="inline-flex min-h-11 w-full items-center justify-center rounded-full bg-brand px-8 py-3 text-lg font-semibold text-ink transition-colors duration-150 hover:bg-brand-hover hover:shadow-soft active:bg-brand-pressed active:shadow-none md:w-auto" type="submit">Надіслати</button>
+            </div>
           </form>
         </div>
 
@@ -382,6 +407,20 @@
       </div>
     </div>
   </footer>
+
+  <!-- Модальне вікно успішної валідації: показується тільки після успішної клієнтської перевірки.
+       role="dialog" + aria-modal + aria-labelledby/aria-describedby: доступність для скрінрідерів -->
+  <div id="successModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/70 p-4" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalText">
+    <div class="w-full max-w-md rounded-xl border border-line bg-card p-8 text-center text-slate-50 shadow-soft">
+      <i class="fa-solid fa-circle-check text-5xl text-brand" aria-hidden="true"></i>
+      <h2 class="mt-4 font-heading text-2xl font-semibold" id="modalTitle">Дякуємо!</h2>
+      <p class="mt-2 text-slate-400" id="modalText">Форма успішно пройшла клієнтську валідацію. Це демонстрація: дані нікуди не надсилаються.</p>
+      <button id="closeModalBtn" class="mt-6 inline-flex min-h-11 w-full items-center justify-center rounded-full bg-brand px-8 py-3 text-lg font-semibold text-ink transition-colors duration-150 hover:bg-brand-hover hover:shadow-soft active:bg-brand-pressed active:shadow-none" type="button">Закрити</button>
+    </div>
+  </div>
+
+  <!-- Валідація форми зворотного зв'язку -->
+  <script src="assets/js/validation.js"></script>
 
   <!-- Мінімальний JS: відкриття й закриття мобільного меню -->
   <script>

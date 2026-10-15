@@ -12,7 +12,7 @@
 
 - HTML5 (семантичні теги `header`, `main`, `section`, `article`, `aside`, `footer`)
 - Tailwind CSS (CDN) + невеликий файл `custom-styles.css`
-- Vanilla JavaScript (мобільне меню)
+- Vanilla JavaScript (мобільне меню, валідація форми, модальне вікно)
 - Google Fonts (Inter, Montserrat), Font Awesome 6
 
 ## Запуск локально
@@ -30,10 +30,23 @@ potik-monet/
 ├── custom-styles.css    власні стилі (фокус, reduced motion)
 ├── assets/
 │   ├── images/          logo.svg, hero-bg.webp
-│   └── icons/           stopwatch.svg, shield.svg, slider.svg
+│   ├── icons/           stopwatch.svg, shield.svg, slider.svg
+│   └── js/validation.js валідація форми, модальне вікно
 ├── README.md
 └── .gitignore
 ```
+
+## Форма зворотного зв'язку: правила валідації
+
+| Поле | Правило | Приклад |
+|---|---|---|
+| Ім'я | 2–50 символів | Ірина |
+| Email | `/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/` | user@gmail.com |
+| Телефон | `/^\+380\d{9}$/`; `0501234567` перетворюється на `+380501234567` | +380501234567 |
+| Повідомлення | 10–1000 символів | Привіт, це тест! |
+| Згода | обов'язково відмічена | ✓ |
+
+Валідація клієнтська: реальної відправки даних на сервер немає, після успіху показується модальне вікно-демонстрація.
 
 ## Демо
 
