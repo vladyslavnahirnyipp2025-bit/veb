@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" fill="none" stroke="#2DD4BF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Іконка «Наочне планування»: повзунок і графік зростання -->
+  <path d="M6 20 L16 12 L26 16 L42 4"/>
+  <path d="M6 38 L42 38"/>
+  <circle cx="28" cy="38" r="6" fill="#142033"/>
+</svg>

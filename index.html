@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="uk" class="scroll-smooth scroll-pt-16">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Потік монет — симулятор заощаджень і планування бюджету</title>
+  <meta name="description" content="Потік монет — простий інтерактивний симулятор для розрахунку накопичень без реєстрації: рухайте повзунки доходу, витрат і терміну та бачте результат.">
+
+  <!-- Шрифти Google Fonts: Montserrat (заголовки) і Inter (текст) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Іконки Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <!-- Tailwind CSS (CDN, як вимагає методичка) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    // Дизайн-система з Figma (ЛР №4) як тема Tailwind
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              DEFAULT: '#2DD4BF',
+              strong: '#0F766E',
+              hover: '#5EEAD4',
+              pressed: '#14B8A6'
+            },
+            accent: '#86EFAC',
+            warning: '#FBBF24',
+            ink: '#0B1220',
+            card: '#142033',
+            line: '#1E2D45'
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+            heading: ['Montserrat', 'Inter', 'system-ui', 'sans-serif']
+          },
+          boxShadow: {
+            soft: '0 4px 16px rgba(0, 0, 0, 0.25)'
+          }
+        }
+      }
+    };
+  </script>
+
+  <!-- Власні стилі (лише те, чого немає в утилітах) -->
+  <link rel="stylesheet" href="custom-styles.css">
+</head>
+<body class="bg-ink font-sans text-base leading-relaxed text-slate-50">
+  <!-- Посилання для користувачів клавіатури та скрінрідерів -->
+  <a class="sr-only rounded-lg bg-brand px-4 py-2 font-semibold text-ink focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50" href="#main">Перейти до основного вмісту</a>
+
+  <!-- ШАПКА: sticky, на мобільному логотип + гамбургер, від md горизонтальна навігація -->
+  <header class="sticky top-0 z-40 border-b border-line bg-ink/95 backdrop-blur">
+    <div class="mx-auto flex w-full max-w-[1200px] flex-wrap items-center justify-between gap-x-8 gap-y-4 px-4 py-4 md:min-h-20">
+      <a class="inline-flex items-center gap-3" href="#top">
+        <!-- Знак логотипа декоративний: назва бренду продубльована текстом поруч, тому alt порожній -->
+        <img class="size-10" src="assets/images/logo.svg" alt="" width="40" height="40">
+        <span class="font-heading text-2xl font-bold text-slate-50">Потік монет</span>
+      </a>
+
+      <button id="menu-toggle" type="button" class="inline-flex size-11 items-center justify-center rounded-lg border border-line text-slate-50 transition-colors hover:bg-card md:hidden" aria-expanded="false" aria-controls="site-menu" aria-label="Відкрити меню">
+        <i class="fa-solid fa-bars text-xl" aria-hidden="true"></i>
+      </button>
+
+      <div id="site-menu" class="hidden basis-full flex-col gap-4 md:flex md:basis-auto md:flex-1 md:flex-row md:items-center md:justify-end md:gap-8">
+        <nav aria-label="Головна навігація">
+          <ul class="flex flex-col gap-1 md:flex-row md:gap-8">
+            <li><a class="block py-2 text-slate-400 transition-colors hover:text-slate-50" href="#benefits">Переваги</a></li>
+            <li><a class="block py-2 text-slate-400 transition-colors hover:text-slate-50" href="#how">Як це працює</a></li>
+            <li><a class="block py-2 text-slate-400 transition-colors hover:text-slate-50" href="#simulator">Симулятор</a></li>
+            <li><a class="block py-2 text-slate-400 transition-colors hover:text-slate-50" href="#contacts">Контакти</a></li>
+          </ul>
+        </nav>
+        <a class="inline-flex min-h-11 w-full items-center justify-center rounded-full bg-brand px-8 py-3 text-lg font-semibold text-ink transition-colors duration-150 hover:bg-brand-hover hover:shadow-soft active:bg-brand-pressed active:shadow-none md:w-auto" href="#simulator">Спробувати симулятор</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ОСНОВНИЙ ВМІСТ: на сторінці рівно один <main> -->
+  <main id="main">
+
+    <!-- 1. HERO -->
+    <section class="bg-ink py-12 md:py-16" id="top" aria-labelledby="hero-title">
+      <div class="mx-auto grid w-full max-w-[1200px] items-center gap-8 px-4 lg:grid-cols-2 lg:gap-16">
+        <div class="grid justify-items-start gap-6">
+          <h1 class="font-heading text-3xl font-bold leading-tight md:text-4xl lg:text-5xl" id="hero-title">Розумне планування особистих заощаджень за кілька кліків</h1>
+          <p class="text-base text-slate-400 md:text-lg">Простий інтерактивний симулятор для миттєвого розрахунку вашого бюджету без реєстрації та зайвих кроків.</p>
+          <p class="w-full md:w-auto">
+            <a class="inline-flex min-h-11 w-full items-center justify-center rounded-full bg-brand px-8 py-3 text-lg font-semibold text-ink transition-colors duration-150 hover:bg-brand-hover hover:shadow-soft active:bg-brand-pressed active:shadow-none md:w-auto" href="#simulator">Спробувати симулятор без реєстрації</a>
+          </p>
+          <ul class="flex flex-wrap gap-x-6 gap-y-2 text-sm text-slate-400">
+            <li><i class="fa-solid fa-circle-check text-brand" aria-hidden="true"></i> без реєстрації</li>
+            <li><i class="fa-solid fa-circle-check text-brand" aria-hidden="true"></i> безкоштовно</li>
+          </ul>
+        </div>
+        <!-- Hero-зображення чисто декоративне, тому alt порожній -->
+        <img class="w-full rounded-xl border border-line" src="assets/images/hero-bg.webp" alt="" width="1024" height="572">
+      </div>
+    </section>
+
+    <!-- 2. ПЕРЕВАГИ -->
+    <section class="theme-light bg-slate-50 py-16 text-ink md:py-24" id="benefits" aria-labelledby="benefits-title">
+      <div class="mx-auto w-full max-w-[1200px] px-4">
+        <h2 class="mb-12 text-center font-heading text-2xl font-semibold md:text-3xl lg:text-[2rem]" id="benefits-title">Чому саме Потік монет</h2>
+        <div class="grid grid-cols-1 gap-6 md:grid-cols-3 lg:gap-8">
+          <article class="flex flex-col gap-4 rounded-xl border border-line bg-card p-6 text-slate-50 transition duration-300 hover:-translate-y-1 hover:shadow-soft sm:p-8">
+            <img class="size-12" src="assets/icons/stopwatch.svg" alt="" width="48" height="48" loading="lazy">
+            <h3 class="font-heading text-xl font-medium leading-tight md:text-2xl">Миттєвий результат</h3>
+            <p class="text-slate-400">Рухайте повзунки, і сума накопичень та дата досягнення цілі оновлюються в реальному часі.</p>
+          </article>
+          <article class="flex flex-col gap-4 rounded-xl border border-line bg-card p-6 text-slate-50 transition duration-300 hover:-translate-y-1 hover:shadow-soft sm:p-8">
+            <img class="size-12" src="assets/icons/shield.svg" alt="" width="48" height="48" loading="lazy">
+            <h3 class="font-heading text-xl font-medium leading-tight md:text-2xl">Без реєстрації та ризику</h3>
+            <p class="text-slate-400">Для розрахунку не потрібна реєстрація чи персональні дані. Ваші цифри не передаються третім особам.</p>
+          </article>
+          <article class="flex flex-col gap-4 rounded-xl border border-line bg-card p-6 text-slate-50 transition duration-300 hover:-translate-y-1 hover:shadow-soft sm:p-8">
+            <img class="size-12" src="assets/icons/slider.svg" alt="" width="48" height="48" loading="lazy">
+            <h3 class="font-heading text-xl font-medium leading-tight md:text-2xl">Наочне планування</h3>
+            <p class="text-slate-400">Змінюйте дохід, витрати й термін, щоб побачити різні сценарії на графіку.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. ПОСЛУГИ: що саме отримує користувач -->
+    <section class="bg-ink py-16 md:py-24" id="services" aria-labelledby="services-title">
+      <div class="mx-auto w-full max-w-[1200px] px-4">
+        <h2 class="mb-4 text-center font-heading text-2xl font-semibold md:text-3xl lg:text-[2rem]" id="services-title">Що ви отримаєте</h2>
+        <p class="mb-12 text-center text-slate-400">Три інструменти для планування без зайвих кроків.</p>
+        <div class="grid grid-cols-1 gap-6 md:grid-cols-3 lg:gap-8">
+          <article class="flex flex-col gap-4 rounded-xl border border-line bg-card p-6 sm:p-8">
+            <h3 class="font-heading text-xl font-medium leading-tight md:text-2xl">Симулятор накопичень</h3>
+            <p class="text-slate-400">Три повзунки: дохід, витрати й термін. Сума заощаджень і дата цілі видно одразу.</p>
+            <a class="mt-auto inline-flex min-h-11 items-center font-semibold text-brand transition-colors hover:text-brand-hover" href="#simulator">Відкрити симулятор <i class="fa-solid fa-arrow-right ml-2" aria-hidden="true"></i></a>
+          </article>
+          <article class="flex flex-col gap-4 rounded-xl border border-line bg-card p-6 sm:p-8">
+            <h3 class="font-heading text-xl font-medium leading-tight md:text-2xl">План на пошту</h3>
+            <p class="text-slate-400">Надішліть розрахунок на свою електронну адресу, щоб повернутися до нього пізніше.</p>
+            <a class="mt-auto inline-flex min-h-11 items-center font-semibold text-brand transition-colors hover:text-brand-hover" href="#plan">Отримати план <i class="fa-solid fa-arrow-right ml-2" aria-hidden="true"></i></a>
+          </article>
+          <article class="flex flex-col gap-4 rounded-xl border border-line bg-card p-6 sm:p-8">
+            <h3 class="font-heading text-xl font-medium leading-tight md:text-2xl">Наочний графік</h3>
+            <p class="text-slate-400">Зростання накопичень показано на графіку, тож різні сценарії легко порівняти.</p>
+            <a class="mt-auto inline-flex min-h-11 items-center font-semibold text-brand transition-colors hover:text-brand-hover" href="#simulator">Подивитися графік <i class="fa-solid fa-arrow-right ml-2" aria-hidden="true"></i></a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. ЯК ЦЕ ПРАЦЮЄ: кроки йдуть у певній послідовності, тому <ol> -->
+    <section class="theme-light bg-slate-50 py-16 text-ink md:py-24" id="how" aria-labelledby="how-title">
+      <div class="mx-auto w-full max-w-[1200px] px-4">
+        <h2 class="mb-12 text-center font-heading text-2xl font-semibold md:text-3xl lg:text-[2rem]" id="how-title">Як це працює</h2>
+        <ol class="grid grid-cols-1 gap-6 md:grid-cols-3 lg:gap-8">
+          <li class="flex flex-col gap-4 rounded-xl border border-line bg-card p-6 text-slate-50 sm:p-8">
+            <span class="grid size-14 place-items-center rounded-full border-2 border-brand font-heading text-xl font-semibold text-brand" aria-hidden="true">1</span>
+            <h3 class="font-heading text-xl font-medium leading-tight md:text-2xl">Вкажіть дохід і витрати</h3>
+            <p class="text-slate-400">Пересуньте два повзунки під свою ситуацію.</p>
+          </li>
+          <li class="flex flex-col gap-4 rounded-xl border border-line bg-card p-6 text-slate-50 sm:p-8">
+            <span class="grid size-14 place-items-center rounded-full border-2 border-brand font-heading text-xl font-semibold text-brand" aria-hidden="true">2</span>
+            <h3 class="font-heading text-xl font-medium leading-tight md:text-2xl">Оберіть термін</h3>
+            <p class="text-slate-400">Задайте, на скільки місяців плануєте накопичувати.</p>
+          </li>
+          <li class="flex flex-col gap-4 rounded-xl border border-line bg-card p-6 text-slate-50 sm:p-8">
+            <span class="grid size-14 place-items-center rounded-full border-2 border-brand font-heading text-xl font-semibold text-brand" aria-hidden="true">3</span>
+            <h3 class="font-heading text-xl font-medium leading-tight md:text-2xl">Отримайте план</h3>
+            <p class="text-slate-400">Побачте суму, дату цілі та надішліть розрахунок на пошту.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- 5. СИМУЛЯТОР: розмітка без JavaScript (логіку розрахунку буде додано пізніше) -->
+    <section class="bg-ink py-16 md:py-24" id="simulator" aria-labelledby="simulator-title">
+      <div class="mx-auto w-full max-w-[1200px] px-4">
+        <h2 class="mb-4 text-center font-heading text-2xl font-semibold md:text-3xl lg:text-[2rem]" id="simulator-title">Розрахуй свої накопичення</h2>
+        <p class="mb-12 text-center text-slate-400">Пересуньте повзунки — і побачите результат.</p>
+
+        <div class="grid items-start gap-8 lg:grid-cols-5 lg:gap-12">
+          <form class="lg:col-span-3" action="#" method="get">
+            <fieldset class="grid min-w-0 gap-6 rounded-xl border border-line bg-card px-5 py-8 sm:px-8 sm:py-12">
+              <legend class="sr-only">Параметри розрахунку</legend>
+
+              <div class="grid gap-2">
+                <div class="flex items-baseline justify-between gap-4 text-sm">
+                  <label class="font-semibold" for="income">Щомісячний дохід</label>
+                  <output class="text-slate-400" for="income">30 000 грн</output>
+                </div>
+                <input class="h-6 w-full accent-brand" type="range" id="income" name="income" min="5000" max="100000" step="1000" value="30000">
+              </div>
+
+              <div class="grid gap-2">
+                <div class="flex items-baseline justify-between gap-4 text-sm">
+                  <label class="font-semibold" for="expenses">Щомісячні витрати</label>
+                  <output class="text-slate-400" for="expenses">18 000 грн</output>
+                </div>
+                <input class="h-6 w-full accent-brand" type="range" id="expenses" name="expenses" min="0" max="100000" step="1000" value="18000">
+                <p class="flex items-center gap-2 text-xs text-warning"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i> Попередження з'явиться, якщо витрати наблизяться до доходу.</p>
+              </div>
+
+              <div class="grid gap-2">
+                <div class="flex items-baseline justify-between gap-4 text-sm">
+                  <label class="font-semibold" for="term">Термін накопичення</label>
+                  <output class="text-slate-400" for="term">24 міс.</output>
+                </div>
+                <input class="h-6 w-full accent-brand" type="range" id="term" name="term" min="1" max="120" step="1" value="24">
+              </div>
+
+              <button class="inline-flex min-h-11 w-full items-center justify-center rounded-full bg-brand px-8 py-3 text-lg font-semibold text-ink transition-colors duration-150 hover:bg-brand-hover hover:shadow-soft active:bg-brand-pressed active:shadow-none md:w-auto md:justify-self-start" type="submit">Зберегти свій план накопичень</button>
+            </fieldset>
+          </form>
+
+          <aside class="grid gap-4 rounded-xl border border-line bg-card px-5 py-8 sm:px-8 sm:py-12 lg:col-span-2" aria-label="Результат розрахунку">
+            <p class="text-sm text-slate-400">Прогнозована сума заощаджень</p>
+            <p class="font-heading text-4xl font-semibold leading-tight text-brand xl:text-5xl">288 000 грн</p>
+            <p class="text-slate-400">Дата досягнення цілі: через 24 місяці</p>
+            <!-- Графік-заглушка (декоративний) -->
+            <svg class="h-auto w-full rounded-lg border border-line bg-ink text-accent" viewBox="0 0 432 170" role="img" aria-label="Графік зростання накопичень (приклад)">
+              <polyline points="10,150 110,120 210,95 310,55 422,15" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </aside>
+        </div>
+        <p class="mt-8 text-center text-xs text-slate-400">Розрахунок орієнтовний і не є фінансовою консультацією.</p>
+      </div>
+    </section>
+
+    <!-- 6. МЕДІА: відео (YouTube, режим підвищеної приватності youtube-nocookie.com) -->
+    <section class="theme-light bg-slate-50 py-16 text-ink md:py-24" id="video" aria-labelledby="video-title">
+      <div class="mx-auto flex w-full max-w-[900px] flex-col items-center gap-8 px-4">
+        <h2 class="text-center font-heading text-2xl font-semibold md:text-3xl lg:text-[2rem]" id="video-title">Відео про планування бюджету</h2>
+        <!-- Контейнер зберігає пропорції 16:9 (aspect-video) і не дає макету «стрибати» -->
+        <div class="aspect-video w-full overflow-hidden rounded-xl shadow-lg">
+          <iframe class="size-full border-0"
+            src="https://www.youtube-nocookie.com/embed/DTxUG28dq4c"
+            title="Відео про особисте планування бюджету та заощадження"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen
+            loading="lazy"></iframe>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. ВІДГУКИ: поки що заглушки, бо сервіс новий і реальних відгуків немає -->
+    <section class="bg-ink py-16 md:py-24" id="testimonials" aria-labelledby="testimonials-title">
+      <div class="mx-auto w-full max-w-[1200px] px-4">
+        <h2 class="mb-12 text-center font-heading text-2xl font-semibold md:text-3xl lg:text-[2rem]" id="testimonials-title">Відгуки користувачів</h2>
+        <div class="grid grid-cols-1 gap-6 md:grid-cols-3 lg:gap-8">
+          <article class="flex flex-col gap-4 rounded-xl border border-line bg-card p-6 sm:p-8">
+            <blockquote class="italic">
+              <p>Текст відгуку користувача</p>
+            </blockquote>
+            <p class="mt-auto flex items-center gap-2 text-slate-400"><i class="fa-regular fa-circle-user text-brand" aria-hidden="true"></i> Ім'я користувача</p>
+          </article>
+          <article class="flex flex-col gap-4 rounded-xl border border-line bg-card p-6 sm:p-8">
+            <blockquote class="italic">
+              <p>Текст відгуку користувача</p>
+            </blockquote>
+            <p class="mt-auto flex items-center gap-2 text-slate-400"><i class="fa-regular fa-circle-user text-brand" aria-hidden="true"></i> Ім'я користувача</p>
+          </article>
+          <article class="flex flex-col gap-4 rounded-xl border border-line bg-card p-6 sm:p-8">
+            <blockquote class="italic">
+              <p>Текст відгуку користувача</p>
+            </blockquote>
+            <p class="mt-auto flex items-center gap-2 text-slate-400"><i class="fa-regular fa-circle-user text-brand" aria-hidden="true"></i> Ім'я користувача</p>
+          </article>
+        </div>
+        <p class="mt-8 text-center text-xs text-slate-400">Це заглушки. Реальних відгуків поки немає, сервіс новий.</p>
+      </div>
+    </section>
+
+    <!-- 8. ЗАКЛИК ДО ДІЇ (CTA) -->
+    <section class="bg-brand-strong py-16 text-white md:py-20" id="cta" aria-labelledby="cta-title">
+      <div class="mx-auto flex w-full max-w-[900px] flex-col items-center gap-6 px-4 text-center">
+        <h2 class="font-heading text-2xl font-semibold md:text-3xl lg:text-4xl" id="cta-title">Почніть планувати заощадження вже сьогодні</h2>
+        <p class="text-base md:text-lg">Без реєстрації та зайвих кроків: пересуньте три повзунки й подивіться результат.</p>
+        <a class="inline-flex min-h-11 w-full items-center justify-center rounded-full bg-slate-50 px-8 py-3 text-lg font-semibold text-ink transition-colors duration-150 hover:bg-white hover:shadow-soft active:bg-slate-200 md:w-auto" href="#simulator">Спробувати симулятор</a>
+      </div>
+    </section>
+
+    <!-- 9. КОНТАКТИ: форма «план на пошту» і інтерактивна карта -->
+    <section class="theme-light bg-slate-50 py-16 text-ink md:py-24" id="contacts-section" aria-labelledby="plan-title">
+      <div class="mx-auto grid w-full max-w-[1200px] gap-12 px-4 lg:grid-cols-2 lg:gap-16">
+
+        <div id="plan">
+          <h2 class="mb-8 font-heading text-2xl font-semibold md:text-3xl lg:text-[2rem]" id="plan-title">Отримайте свій план накопичень на пошту</h2>
+          <form class="grid justify-items-start gap-6" action="#" method="post">
+            <div class="grid w-full gap-2">
+              <label class="font-semibold" for="name">Ім'я</label>
+              <input class="min-h-11 w-full rounded-lg border border-line bg-card px-4 py-3 text-slate-50 transition-colors focus:border-brand" type="text" id="name" name="name" autocomplete="given-name" minlength="2" required>
+            </div>
+            <div class="grid w-full gap-2">
+              <label class="font-semibold" for="email">Email</label>
+              <input class="min-h-11 w-full rounded-lg border border-line bg-card px-4 py-3 text-slate-50 transition-colors placeholder:text-slate-400 focus:border-brand" type="email" id="email" name="email" autocomplete="email" placeholder="name@domain.com" required aria-describedby="email-hint">
+              <p class="text-xs text-slate-600" id="email-hint">Вкажіть адресу, на яку надіслати розрахунок.</p>
+            </div>
+            <div class="flex w-full items-center gap-3">
+              <input class="size-6 accent-brand" type="checkbox" id="consent" name="consent" required>
+              <label for="consent">Погоджуюсь з <a class="text-brand-strong underline" href="#privacy">політикою конфіденційності</a></label>
+            </div>
+            <button class="inline-flex min-h-11 w-full items-center justify-center rounded-full bg-brand px-8 py-3 text-lg font-semibold text-ink transition-colors duration-150 hover:bg-brand-hover hover:shadow-soft active:bg-brand-pressed active:shadow-none md:w-auto" type="submit">Надіслати розрахунок на пошту</button>
+          </form>
+        </div>
+
+        <!-- Карта Google Maps (умовна адреса офісу у Львові) -->
+        <div class="flex flex-col gap-4">
+          <h2 class="font-heading text-2xl font-semibold md:text-3xl lg:text-[2rem]" id="map-title">Наше розташування</h2>
+          <p class="text-slate-600">Умовна адреса офісу: Львів, площа Ринок.</p>
+          <div class="aspect-video w-full overflow-hidden rounded-xl shadow-lg lg:aspect-auto lg:min-h-[320px] lg:flex-1">
+            <iframe class="size-full border-0"
+              src="https://www.google.com/maps?q=%D0%BF%D0%BB%D0%BE%D1%89%D0%B0+%D0%A0%D0%B8%D0%BD%D0%BE%D0%BA,+%D0%9B%D1%8C%D0%B2%D1%96%D0%B2&hl=uk&z=16&output=embed"
+              title="Інтерактивна карта: площа Ринок, Львів"
+              referrerpolicy="no-referrer-when-downgrade"
+              allowfullscreen
+              loading="lazy"></iframe>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ПІДВАЛ: 1 колонка на мобільному, 2 на md, 4 на lg -->
+  <footer class="bg-ink pb-8 pt-16 text-slate-50" id="contacts">
+    <div class="mx-auto w-full max-w-[1200px] px-4">
+      <div class="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-4">
+        <div>
+          <a class="inline-flex items-center gap-3" href="#top">
+            <img class="size-10" src="assets/images/logo.svg" alt="" width="40" height="40" loading="lazy">
+            <span class="font-heading text-2xl font-bold text-slate-50">Потік монет</span>
+          </a>
+          <p class="mt-4 text-slate-400">Простий симулятор накопичень без реєстрації.</p>
+        </div>
+
+        <nav aria-label="Навігація у підвалі">
+          <h2 class="mb-4 font-semibold">Розділи</h2>
+          <ul class="grid gap-2">
+            <li><a class="inline-block py-1 text-slate-400 transition-colors hover:text-brand" href="#how">Як це працює</a></li>
+            <li><a class="inline-block py-1 text-slate-400 transition-colors hover:text-brand" href="#simulator">Симулятор</a></li>
+            <li><a class="inline-block py-1 text-slate-400 transition-colors hover:text-brand" href="#benefits">Переваги</a></li>
+          </ul>
+        </nav>
+
+        <nav aria-label="Корисні посилання">
+          <h2 class="mb-4 font-semibold">Корисне</h2>
+          <ul class="grid gap-2">
+            <li><a class="inline-block py-1 text-slate-400 transition-colors hover:text-brand" href="#privacy" id="privacy">Політика конфіденційності</a></li>
+            <li><a class="inline-block py-1 text-slate-400 transition-colors hover:text-brand" href="#top">Умови використання</a></li>
+          </ul>
+        </nav>
+
+        <div>
+          <h2 class="mb-4 font-semibold">Контакти</h2>
+          <address class="not-italic">
+            <a class="inline-block py-1 text-slate-400 transition-colors hover:text-brand" href="mailto:hello@potik-monet.example">hello@potik-monet.example</a>
+          </address>
+          <ul class="mt-4 flex gap-4">
+            <li><a class="grid size-11 place-items-center rounded-full border border-line text-slate-400 transition-colors hover:text-brand" href="#top" aria-label="Instagram"><i class="fa-brands fa-instagram text-xl" aria-hidden="true"></i></a></li>
+            <li><a class="grid size-11 place-items-center rounded-full border border-line text-slate-400 transition-colors hover:text-brand" href="#top" aria-label="Facebook"><i class="fa-brands fa-facebook text-xl" aria-hidden="true"></i></a></li>
+            <li><a class="grid size-11 place-items-center rounded-full border border-line text-slate-400 transition-colors hover:text-brand" href="#top" aria-label="Telegram"><i class="fa-brands fa-telegram text-xl" aria-hidden="true"></i></a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="mt-12 border-t border-line pt-6 text-sm text-slate-400">
+        <p>© 2026 Потік монет</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Мінімальний JS: відкриття й закриття мобільного меню -->
+  <script>
+    const toggle = document.getElementById('menu-toggle');
+    const menu = document.getElementById('site-menu');
+
+    function setMenu(open) {
+      menu.classList.toggle('hidden', !open);
+      menu.classList.toggle('flex', open);
+      toggle.setAttribute('aria-expanded', String(open));
+      toggle.setAttribute('aria-label', open ? 'Закрити меню' : 'Відкрити меню');
+    }
+
+    toggle.addEventListener('click', () => setMenu(toggle.getAttribute('aria-expanded') !== 'true'));
+
+    // Після вибору пункту на мобільному меню згортається
+    menu.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => setMenu(false)));
+  </script>
+</body>
+</html>

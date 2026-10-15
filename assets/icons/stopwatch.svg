@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" fill="none" stroke="#2DD4BF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Іконка «Миттєвий результат»: секундомір -->
+  <circle cx="24" cy="28" r="16"/>
+  <rect x="18" y="4" width="12" height="4" rx="2" fill="#2DD4BF" stroke="none"/>
+  <path d="M24 28 L24 18"/>
+  <path d="M37 13 L40 10"/>
+</svg>
