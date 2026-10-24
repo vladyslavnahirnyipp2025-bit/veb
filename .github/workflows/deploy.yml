@@ -1,0 +1,52 @@
+# CI/CD Production Deploy (ЛР №12)
+# Після кожного push у main: тести логіки калькулятора, збірка CSS і публікація на Vercel.
+# Потрібний секрет у GitHub (Settings -> Secrets and variables -> Actions): VERCEL_TOKEN
+# Токен створюється у Vercel: Account Settings -> Tokens.
+name: CI/CD Production Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:        # дозволяє запустити вручну з вкладки Actions
+
+# Новий push скасовує попередній запуск, який ще виконується
+concurrency:
+  group: production-deploy
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    name: Test, build and deploy
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Unit tests
+        run: npm test
+
+      - name: Build CSS and check it is up to date
+        run: |
+          npm run build:css
+          git diff --exit-code assets/css/styles.css
+
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+
+      - name: Deploy to Vercel (production)
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        run: vercel deploy --prod --yes --token="$VERCEL_TOKEN"
