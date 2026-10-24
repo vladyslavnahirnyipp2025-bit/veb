@@ -23,6 +23,10 @@
   <!-- Іконки Font Awesome 6 -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
+  <!-- ЛР №10: CSS плагінів через CDN підключається в <head>, до власних стилів -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11.1.14/swiper-bundle.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.36/dist/fancybox/fancybox.css">
+
   <!-- Tailwind CSS (CDN, як вимагає методичка) -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -97,6 +101,10 @@
       <div class="mx-auto grid w-full max-w-[1200px] items-center gap-8 px-4 lg:grid-cols-2 lg:gap-16">
         <div class="grid justify-items-start gap-6">
           <h1 class="font-heading text-3xl font-bold leading-tight md:text-4xl lg:text-5xl" id="hero-title">Розумне планування особистих заощаджень за кілька кліків</h1>
+          <!-- Typed.js (ЛР №10): повний текст для скрінрідерів, анімований рядок для зору (aria-hidden).
+               Усередині span лежить перша фраза: без JavaScript користувач бачить статичний текст -->
+          <p class="sr-only">Накопичуйте на подушку безпеки, відпустку, навчання або перший внесок.</p>
+          <p class="min-h-8 font-heading text-xl font-medium text-slate-50 md:text-2xl" aria-hidden="true">Накопичуйте на <span id="typed-text" class="text-brand">подушку безпеки</span></p>
           <p class="text-base text-slate-400 md:text-lg">Простий інтерактивний симулятор для миттєвого розрахунку вашого бюджету без реєстрації та зайвих кроків.</p>
           <p class="w-full md:w-auto">
             <a class="inline-flex min-h-11 w-full items-center justify-center rounded-full bg-brand px-8 py-3 text-lg font-semibold text-ink transition-colors duration-150 hover:bg-brand-hover hover:shadow-soft active:bg-brand-pressed active:shadow-none md:w-auto" href="#simulator">Спробувати симулятор без реєстрації</a>
@@ -255,35 +263,128 @@
       </div>
     </section>
 
-    <!-- 7. ВІДГУКИ: поки що заглушки, бо сервіс новий і реальних відгуків немає -->
-    <section class="bg-ink py-16 md:py-24" id="testimonials" aria-labelledby="testimonials-title">
+    <!-- 7. СЦЕНАРІЇ НАКОПИЧЕНЬ: слайдер Swiper (ЛР №10). Замість вигаданих відгуків тут умовні приклади,
+         які рахуються за тією ж формулою, що й симулятор: (дохід − витрати) × термін -->
+    <section class="bg-ink py-16 md:py-24" id="scenarios" aria-labelledby="scenarios-title">
       <div class="mx-auto w-full max-w-[1200px] px-4">
-        <h2 class="mb-12 text-center font-heading text-2xl font-semibold md:text-3xl lg:text-[2rem]" id="testimonials-title">Відгуки користувачів</h2>
-        <div class="grid grid-cols-1 gap-6 md:grid-cols-3 lg:gap-8">
-          <article class="flex flex-col gap-4 rounded-xl border border-line bg-card p-6 sm:p-8">
-            <blockquote class="italic">
-              <p>Текст відгуку користувача</p>
-            </blockquote>
-            <p class="mt-auto flex items-center gap-2 text-slate-400"><i class="fa-regular fa-circle-user text-brand" aria-hidden="true"></i> Ім'я користувача</p>
-          </article>
-          <article class="flex flex-col gap-4 rounded-xl border border-line bg-card p-6 sm:p-8">
-            <blockquote class="italic">
-              <p>Текст відгуку користувача</p>
-            </blockquote>
-            <p class="mt-auto flex items-center gap-2 text-slate-400"><i class="fa-regular fa-circle-user text-brand" aria-hidden="true"></i> Ім'я користувача</p>
-          </article>
-          <article class="flex flex-col gap-4 rounded-xl border border-line bg-card p-6 sm:p-8">
-            <blockquote class="italic">
-              <p>Текст відгуку користувача</p>
-            </blockquote>
-            <p class="mt-auto flex items-center gap-2 text-slate-400"><i class="fa-regular fa-circle-user text-brand" aria-hidden="true"></i> Ім'я користувача</p>
-          </article>
+        <h2 class="mb-4 text-center font-heading text-2xl font-semibold md:text-3xl lg:text-[2rem]" id="scenarios-title">Приклади сценаріїв накопичення</h2>
+        <p class="mb-12 text-center text-slate-400">Умовні приклади без відсотків. Підставте свої числа в симулятор вище.</p>
+
+        <div class="swiper scenario-swiper" aria-roledescription="карусель" aria-label="Сценарії накопичення">
+          <div class="swiper-wrapper">
+          <div class="swiper-slide !h-auto">
+            <article class="flex h-full flex-col gap-4 rounded-xl border border-line bg-card p-6 sm:p-8">
+              <h3 class="font-heading text-xl font-medium leading-tight">Студент</h3>
+              <dl class="grid gap-2 text-sm">
+                <div class="flex justify-between gap-4"><dt class="text-slate-400">Дохід на місяць</dt><dd>12 000 грн</dd></div>
+                <div class="flex justify-between gap-4"><dt class="text-slate-400">Витрати на місяць</dt><dd>9 000 грн</dd></div>
+                <div class="flex justify-between gap-4"><dt class="text-slate-400">Термін</dt><dd>12 міс.</dd></div>
+              </dl>
+              <p class="mt-auto text-sm text-slate-400">Накопичення за цей час
+                <strong class="mt-1 block font-heading text-2xl font-semibold text-brand">36 000 грн</strong>
+              </p>
+            </article>
+          </div>
+          <div class="swiper-slide !h-auto">
+            <article class="flex h-full flex-col gap-4 rounded-xl border border-line bg-card p-6 sm:p-8">
+              <h3 class="font-heading text-xl font-medium leading-tight">Молодий спеціаліст</h3>
+              <dl class="grid gap-2 text-sm">
+                <div class="flex justify-between gap-4"><dt class="text-slate-400">Дохід на місяць</dt><dd>30 000 грн</dd></div>
+                <div class="flex justify-between gap-4"><dt class="text-slate-400">Витрати на місяць</dt><dd>20 000 грн</dd></div>
+                <div class="flex justify-between gap-4"><dt class="text-slate-400">Термін</dt><dd>24 міс.</dd></div>
+              </dl>
+              <p class="mt-auto text-sm text-slate-400">Накопичення за цей час
+                <strong class="mt-1 block font-heading text-2xl font-semibold text-brand">240 000 грн</strong>
+              </p>
+            </article>
+          </div>
+          <div class="swiper-slide !h-auto">
+            <article class="flex h-full flex-col gap-4 rounded-xl border border-line bg-card p-6 sm:p-8">
+              <h3 class="font-heading text-xl font-medium leading-tight">Фрилансер</h3>
+              <dl class="grid gap-2 text-sm">
+                <div class="flex justify-between gap-4"><dt class="text-slate-400">Дохід на місяць</dt><dd>45 000 грн</dd></div>
+                <div class="flex justify-between gap-4"><dt class="text-slate-400">Витрати на місяць</dt><dd>30 000 грн</dd></div>
+                <div class="flex justify-between gap-4"><dt class="text-slate-400">Термін</dt><dd>18 міс.</dd></div>
+              </dl>
+              <p class="mt-auto text-sm text-slate-400">Накопичення за цей час
+                <strong class="mt-1 block font-heading text-2xl font-semibold text-brand">270 000 грн</strong>
+              </p>
+            </article>
+          </div>
+          <div class="swiper-slide !h-auto">
+            <article class="flex h-full flex-col gap-4 rounded-xl border border-line bg-card p-6 sm:p-8">
+              <h3 class="font-heading text-xl font-medium leading-tight">Сім'я з дитиною</h3>
+              <dl class="grid gap-2 text-sm">
+                <div class="flex justify-between gap-4"><dt class="text-slate-400">Дохід на місяць</dt><dd>60 000 грн</dd></div>
+                <div class="flex justify-between gap-4"><dt class="text-slate-400">Витрати на місяць</dt><dd>48 000 грн</dd></div>
+                <div class="flex justify-between gap-4"><dt class="text-slate-400">Термін</dt><dd>36 міс.</dd></div>
+              </dl>
+              <p class="mt-auto text-sm text-slate-400">Накопичення за цей час
+                <strong class="mt-1 block font-heading text-2xl font-semibold text-brand">432 000 грн</strong>
+              </p>
+            </article>
+          </div>
+          <div class="swiper-slide !h-auto">
+            <article class="flex h-full flex-col gap-4 rounded-xl border border-line bg-card p-6 sm:p-8">
+              <h3 class="font-heading text-xl font-medium leading-tight">Відпустка влітку</h3>
+              <dl class="grid gap-2 text-sm">
+                <div class="flex justify-between gap-4"><dt class="text-slate-400">Дохід на місяць</dt><dd>25 000 грн</dd></div>
+                <div class="flex justify-between gap-4"><dt class="text-slate-400">Витрати на місяць</dt><dd>21 000 грн</dd></div>
+                <div class="flex justify-between gap-4"><dt class="text-slate-400">Термін</dt><dd>10 міс.</dd></div>
+              </dl>
+              <p class="mt-auto text-sm text-slate-400">Накопичення за цей час
+                <strong class="mt-1 block font-heading text-2xl font-semibold text-brand">40 000 грн</strong>
+              </p>
+            </article>
+          </div>
+          </div>
         </div>
-        <p class="mt-8 text-center text-xs text-slate-400">Це заглушки. Реальних відгуків поки немає, сервіс новий.</p>
+
+        <!-- Керування слайдером винесено за межі .swiper, щоб не перекривати картки -->
+        <div class="mt-8 flex items-center justify-between gap-4">
+          <button type="button" class="scenario-prev inline-flex size-11 items-center justify-center rounded-full border border-line text-slate-50 transition-colors hover:bg-card" aria-label="Попередній сценарій">
+            <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
+          </button>
+          <div class="scenario-pagination flex flex-1 items-center justify-center"></div>
+          <button type="button" class="scenario-next inline-flex size-11 items-center justify-center rounded-full border border-line text-slate-50 transition-colors hover:bg-card" aria-label="Наступний сценарій">
+            <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+          </button>
+        </div>
       </div>
     </section>
 
-    <!-- 8. ЗАКЛИК ДО ДІЇ (CTA) -->
+    <!-- 8. ГАЛЕРЕЯ: Fancybox (ЛР №10). Зображення згруповані атрибутом data-fancybox, підпис береться з data-caption.
+         Це реальні знімки секцій цього сайту -->
+    <section class="theme-light bg-slate-50 py-16 text-ink md:py-24" id="gallery" aria-labelledby="gallery-title">
+      <div class="mx-auto w-full max-w-[1200px] px-4">
+        <h2 class="mb-4 text-center font-heading text-2xl font-semibold md:text-3xl lg:text-[2rem]" id="gallery-title">Як виглядає сервіс</h2>
+        <p class="mb-12 text-center text-slate-600">Натисніть на зображення, щоб відкрити його на весь екран і збільшити.</p>
+        <ul class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
+          <li>
+            <a class="block overflow-hidden rounded-xl border border-line shadow-lg transition-shadow duration-300 hover:shadow-soft" href="assets/images/gallery-hero.webp" data-fancybox="service-gallery" data-caption="Головний екран: заголовок і заклик до дії">
+              <img class="aspect-[4/3] w-full object-cover object-top" src="assets/images/gallery-hero.webp" alt="Головний екран: заголовок і заклик до дії" width="1280" height="520" loading="lazy">
+            </a>
+          </li>
+          <li>
+            <a class="block overflow-hidden rounded-xl border border-line shadow-lg transition-shadow duration-300 hover:shadow-soft" href="assets/images/gallery-benefits.webp" data-fancybox="service-gallery" data-caption="Секція переваг сервісу">
+              <img class="aspect-[4/3] w-full object-cover object-top" src="assets/images/gallery-benefits.webp" alt="Секція переваг сервісу" width="1280" height="590" loading="lazy">
+            </a>
+          </li>
+          <li>
+            <a class="block overflow-hidden rounded-xl border border-line shadow-lg transition-shadow duration-300 hover:shadow-soft" href="assets/images/gallery-how.webp" data-fancybox="service-gallery" data-caption="Як це працює: три кроки">
+              <img class="aspect-[4/3] w-full object-cover object-top" src="assets/images/gallery-how.webp" alt="Як це працює: три кроки" width="1280" height="514" loading="lazy">
+            </a>
+          </li>
+          <li>
+            <a class="block overflow-hidden rounded-xl border border-line shadow-lg transition-shadow duration-300 hover:shadow-soft" href="assets/images/gallery-simulator.webp" data-fancybox="service-gallery" data-caption="Симулятор накопичень">
+              <img class="aspect-[4/3] w-full object-cover object-top" src="assets/images/gallery-simulator.webp" alt="Симулятор накопичень" width="1280" height="768" loading="lazy">
+            </a>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 9. ЗАКЛИК ДО ДІЇ (CTA) -->
     <section class="bg-brand-strong py-16 text-white md:py-20" id="cta" aria-labelledby="cta-title">
       <div class="mx-auto flex w-full max-w-[900px] flex-col items-center gap-6 px-4 text-center">
         <h2 class="font-heading text-2xl font-semibold md:text-3xl lg:text-4xl" id="cta-title">Почніть планувати заощадження вже сьогодні</h2>
@@ -418,6 +519,12 @@
       <button id="closeModalBtn" class="mt-6 inline-flex min-h-11 w-full items-center justify-center rounded-full bg-brand px-8 py-3 text-lg font-semibold text-ink transition-colors duration-150 hover:bg-brand-hover hover:shadow-soft active:bg-brand-pressed active:shadow-none" type="button">Закрити</button>
     </div>
   </div>
+
+  <!-- ЛР №10: JS плагінів через CDN підключається перед </body> (defer зберігає порядок виконання) -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11.1.14/swiper-bundle.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.36/dist/fancybox/fancybox.umd.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.1.0/dist/typed.umd.js" defer></script>
+  <script src="assets/js/plugins.js" defer></script>
 
   <!-- Валідація форми зворотного зв'язку -->
   <script src="assets/js/validation.js"></script>
