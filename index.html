@@ -349,7 +349,38 @@
       </div>
     </section>
 
-    <!-- 8. ЗАКЛИК ДО ДІЇ (CTA) -->
+    <!-- 8. ГАЛЕРЕЯ: Fancybox (ЛР №10). Зображення згруповані атрибутом data-fancybox, підпис береться з data-caption.
+         Це реальні знімки секцій цього сайту -->
+    <section class="theme-light bg-slate-50 py-16 text-ink md:py-24" id="gallery" aria-labelledby="gallery-title">
+      <div class="mx-auto w-full max-w-[1200px] px-4">
+        <h2 class="mb-4 text-center font-heading text-2xl font-semibold md:text-3xl lg:text-[2rem]" id="gallery-title">Як виглядає сервіс</h2>
+        <p class="mb-12 text-center text-slate-600">Натисніть на зображення, щоб відкрити його на весь екран і збільшити.</p>
+        <ul class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
+          <li>
+            <a class="block overflow-hidden rounded-xl border border-line shadow-lg transition-shadow duration-300 hover:shadow-soft" href="assets/images/gallery-hero.webp" data-fancybox="service-gallery" data-caption="Головний екран: заголовок і заклик до дії">
+              <img class="aspect-[4/3] w-full object-cover object-top" src="assets/images/gallery-hero.webp" alt="Головний екран: заголовок і заклик до дії" width="1280" height="520" loading="lazy">
+            </a>
+          </li>
+          <li>
+            <a class="block overflow-hidden rounded-xl border border-line shadow-lg transition-shadow duration-300 hover:shadow-soft" href="assets/images/gallery-benefits.webp" data-fancybox="service-gallery" data-caption="Секція переваг сервісу">
+              <img class="aspect-[4/3] w-full object-cover object-top" src="assets/images/gallery-benefits.webp" alt="Секція переваг сервісу" width="1280" height="590" loading="lazy">
+            </a>
+          </li>
+          <li>
+            <a class="block overflow-hidden rounded-xl border border-line shadow-lg transition-shadow duration-300 hover:shadow-soft" href="assets/images/gallery-how.webp" data-fancybox="service-gallery" data-caption="Як це працює: три кроки">
+              <img class="aspect-[4/3] w-full object-cover object-top" src="assets/images/gallery-how.webp" alt="Як це працює: три кроки" width="1280" height="514" loading="lazy">
+            </a>
+          </li>
+          <li>
+            <a class="block overflow-hidden rounded-xl border border-line shadow-lg transition-shadow duration-300 hover:shadow-soft" href="assets/images/gallery-simulator.webp" data-fancybox="service-gallery" data-caption="Симулятор накопичень">
+              <img class="aspect-[4/3] w-full object-cover object-top" src="assets/images/gallery-simulator.webp" alt="Симулятор накопичень" width="1280" height="768" loading="lazy">
+            </a>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 9. ЗАКЛИК ДО ДІЇ (CTA) -->
     <section class="bg-brand-strong py-16 text-white md:py-20" id="cta" aria-labelledby="cta-title">
       <div class="mx-auto flex w-full max-w-[900px] flex-col items-center gap-6 px-4 text-center">
         <h2 class="font-heading text-2xl font-semibold md:text-3xl lg:text-4xl" id="cta-title">Почніть планувати заощадження вже сьогодні</h2>
