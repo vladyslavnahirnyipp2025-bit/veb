@@ -192,57 +192,98 @@
       </div>
     </section>
 
-    <!-- 5. СИМУЛЯТОР: розмітка без JavaScript (логіку розрахунку буде додано пізніше) -->
+    <!-- 5. СИМУЛЯТОР (ЛР №11): інтерактивний віджет. Логіка розрахунку в assets/js/savings-calc.js,
+         зв'язок із сторінкою в assets/js/widget.js. Для кожного числового параметра є поле вводу й повзунок -->
     <section class="bg-ink py-16 md:py-24" id="simulator" aria-labelledby="simulator-title">
       <div class="mx-auto w-full max-w-[1200px] px-4">
         <h2 class="mb-4 text-center font-heading text-2xl font-semibold md:text-3xl lg:text-[2rem]" id="simulator-title">Розрахуй свої накопичення</h2>
-        <p class="mb-12 text-center text-slate-400">Пересуньте повзунки — і побачите результат.</p>
+        <p class="mb-12 text-center text-slate-400">Введіть числа або пересуньте повзунки: результат оновлюється одразу.</p>
 
         <div class="grid items-start gap-8 lg:grid-cols-5 lg:gap-12">
-          <form class="lg:col-span-3" action="#" method="get">
+          <form class="lg:col-span-3" id="savingsForm" action="#" method="get" novalidate>
             <fieldset class="grid min-w-0 gap-6 rounded-xl border border-line bg-card px-5 py-8 sm:px-8 sm:py-12">
               <legend class="sr-only">Параметри розрахунку</legend>
 
               <div class="grid gap-2">
                 <div class="flex items-baseline justify-between gap-4 text-sm">
-                  <label class="font-semibold" for="income">Щомісячний дохід</label>
-                  <output class="text-slate-400" for="income">30 000 грн</output>
+                  <label class="font-semibold" for="income">Щомісячний дохід, грн</label>
+                  <output class="text-slate-400" id="incomeOut" for="income incomeRange">30 000 грн</output>
                 </div>
-                <input class="h-6 w-full accent-brand" type="range" id="income" name="income" min="5000" max="100000" step="1000" value="30000">
+                <div class="grid grid-cols-[1fr_8.5rem] items-center gap-4">
+                  <input class="h-6 w-full accent-brand" type="range" id="incomeRange" min="5000" max="100000" step="1000" value="30000" aria-label="Щомісячний дохід, грн: повзунок" tabindex="-1">
+                  <input class="min-h-11 w-full rounded-lg border border-line bg-ink px-3 py-2 text-slate-50 transition-colors focus:border-brand" type="number" id="income" name="income" inputmode="decimal" min="1" max="1000000" step="any" required value="30000" aria-describedby="incomeError incomeNote">
+                </div>
+                <p class="hidden text-sm text-red-400" id="incomeError" role="alert"></p>
+                <p class="hidden text-xs text-slate-400" id="incomeNote"></p>
               </div>
 
               <div class="grid gap-2">
                 <div class="flex items-baseline justify-between gap-4 text-sm">
-                  <label class="font-semibold" for="expenses">Щомісячні витрати</label>
-                  <output class="text-slate-400" for="expenses">18 000 грн</output>
+                  <label class="font-semibold" for="expenses">Щомісячні витрати, грн</label>
+                  <output class="text-slate-400" id="expensesOut" for="expenses expensesRange">18 000 грн</output>
                 </div>
-                <input class="h-6 w-full accent-brand" type="range" id="expenses" name="expenses" min="0" max="100000" step="1000" value="18000">
-                <p class="flex items-center gap-2 text-xs text-warning"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i> Попередження з'явиться, якщо витрати наблизяться до доходу.</p>
+                <div class="grid grid-cols-[1fr_8.5rem] items-center gap-4">
+                  <input class="h-6 w-full accent-brand" type="range" id="expensesRange" min="0" max="100000" step="1000" value="18000" aria-label="Щомісячні витрати, грн: повзунок" tabindex="-1">
+                  <input class="min-h-11 w-full rounded-lg border border-line bg-ink px-3 py-2 text-slate-50 transition-colors focus:border-brand" type="number" id="expenses" name="expenses" inputmode="decimal" min="0" max="1000000" step="any" required value="18000" aria-describedby="expensesError expensesNote">
+                </div>
+                <p class="hidden text-sm text-red-400" id="expensesError" role="alert"></p>
+                <p class="hidden text-xs text-slate-400" id="expensesNote"></p>
+                <p class="hidden items-center gap-2 text-xs text-warning" id="expensesWarning" role="status"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i> <span id="expensesWarningText"></span></p>
               </div>
 
               <div class="grid gap-2">
                 <div class="flex items-baseline justify-between gap-4 text-sm">
-                  <label class="font-semibold" for="term">Термін накопичення</label>
-                  <output class="text-slate-400" for="term">24 міс.</output>
+                  <label class="font-semibold" for="term">Термін накопичення, міс.</label>
+                  <output class="text-slate-400" id="termOut" for="term termRange">24 міс.</output>
                 </div>
-                <input class="h-6 w-full accent-brand" type="range" id="term" name="term" min="1" max="120" step="1" value="24">
+                <div class="grid grid-cols-[1fr_8.5rem] items-center gap-4">
+                  <input class="h-6 w-full accent-brand" type="range" id="termRange" min="1" max="120" step="1" value="24" aria-label="Термін накопичення, міс.: повзунок" tabindex="-1">
+                  <input class="min-h-11 w-full rounded-lg border border-line bg-ink px-3 py-2 text-slate-50 transition-colors focus:border-brand" type="number" id="term" name="term" inputmode="decimal" min="1" max="120" step="any" required value="24" aria-describedby="termError termNote">
+                </div>
+                <p class="hidden text-sm text-red-400" id="termError" role="alert"></p>
+                <p class="hidden text-xs text-slate-400" id="termNote"></p>
               </div>
 
-              <button class="inline-flex min-h-11 w-full items-center justify-center rounded-full bg-brand px-8 py-3 text-lg font-semibold text-ink transition-colors duration-150 hover:bg-brand-hover hover:shadow-soft active:bg-brand-pressed active:shadow-none md:w-auto md:justify-self-start" type="submit">Зберегти свій план накопичень</button>
+              <div class="grid gap-2">
+                <label class="text-sm font-semibold" for="rate">Умовна річна ставка</label>
+                <select class="min-h-11 w-full rounded-lg border border-line bg-ink px-3 py-2 text-slate-50 transition-colors focus:border-brand" id="rate" name="rate" aria-describedby="rateError">
+                  <option value="0" selected>Без відсотків (0 %)</option>
+                  <option value="8">Ощадний рахунок (8 %)</option>
+                  <option value="12">Депозит (12 %)</option>
+                  <option value="15">Облігації (15 %)</option>
+                </select>
+                <p class="hidden text-sm text-red-400" id="rateError" role="alert"></p>
+              </div>
+
+              <div class="flex items-start gap-3">
+                <input class="mt-1 size-6 shrink-0 accent-brand" type="checkbox" id="compound" name="compound" checked disabled>
+                <label class="text-sm" for="compound">Щомісячна капіталізація відсотків <span class="text-slate-400">(доступна, коли обрано ставку)</span></label>
+              </div>
+
+              <div class="grid gap-3 md:flex md:items-center md:gap-6">
+                <button class="inline-flex min-h-11 w-full items-center justify-center rounded-full bg-brand px-8 py-3 text-lg font-semibold text-ink transition-colors duration-150 hover:bg-brand-hover hover:shadow-soft active:bg-brand-pressed active:shadow-none md:w-auto" type="submit">Зберегти свій план накопичень</button>
+                <p class="text-sm text-slate-400" id="saveStatus" role="status"></p>
+              </div>
             </fieldset>
           </form>
 
-          <aside class="grid gap-4 rounded-xl border border-line bg-card px-5 py-8 sm:px-8 sm:py-12 lg:col-span-2" aria-label="Результат розрахунку">
+          <aside class="grid gap-4 rounded-xl border border-line bg-card px-5 py-8 sm:px-8 sm:py-12 lg:col-span-2" aria-label="Результат розрахунку" aria-live="polite">
             <p class="text-sm text-slate-400">Прогнозована сума заощаджень</p>
-            <p class="font-heading text-4xl font-semibold leading-tight text-brand xl:text-5xl">288 000 грн</p>
-            <p class="text-slate-400">Дата досягнення цілі: через 24 місяці</p>
-            <!-- Графік-заглушка (декоративний) -->
-            <svg class="h-auto w-full rounded-lg border border-line bg-ink text-accent" viewBox="0 0 432 170" role="img" aria-label="Графік зростання накопичень (приклад)">
-              <polyline points="10,150 110,120 210,95 310,55 422,15" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+            <p class="break-words font-heading text-4xl font-semibold leading-tight text-brand xl:text-5xl" id="resultTotal">288 000 грн</p>
+            <p class="text-slate-400" id="resultTerm">Термін: 24 міс. (2 р.)</p>
+            <dl class="grid gap-2 text-sm">
+              <div class="flex justify-between gap-4"><dt class="text-slate-400">Відкладаєте щомісяця</dt><dd id="resultMonthly">12 000 грн</dd></div>
+              <div class="flex justify-between gap-4"><dt class="text-slate-400">Власні внески</dt><dd id="resultDeposits">288 000 грн</dd></div>
+              <div class="flex justify-between gap-4"><dt class="text-slate-400">Відсотки</dt><dd id="resultInterest">0 грн</dd></div>
+            </dl>
+            <p class="hidden text-sm text-warning" id="resultNote"></p>
+            <!-- Графік будується з розрахованих даних: polyline оновлює widget.js -->
+            <svg class="h-auto w-full rounded-lg border border-line bg-ink text-accent" id="savingsChart" viewBox="0 0 432 170" role="img" aria-label="Графік зростання накопичень">
+              <polyline id="chartLine" points="10,160 422,15" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </aside>
         </div>
-        <p class="mt-8 text-center text-xs text-slate-400">Розрахунок орієнтовний і не є фінансовою консультацією.</p>
+        <p class="mt-8 text-center text-xs text-slate-400">Розрахунок орієнтовний і не є фінансовою консультацією. Ставки умовні.</p>
       </div>
     </section>
 
@@ -525,6 +566,9 @@
   <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.36/dist/fancybox/fancybox.umd.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/typed.js@2.1.0/dist/typed.umd.js" defer></script>
   <script src="assets/js/plugins.js" defer></script>
+  <!-- ЛР №11: логіка калькулятора й зв'язок із сторінкою -->
+  <script src="assets/js/savings-calc.js" defer></script>
+  <script src="assets/js/widget.js" defer></script>
 
   <!-- Валідація форми зворотного зв'язку -->
   <script src="assets/js/validation.js"></script>
