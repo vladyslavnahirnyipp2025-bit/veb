@@ -46,3 +46,29 @@
 .scenario-pagination {
   position: static;
 }
+
+/* Крапки пагінації: видима крапка 12 px, а область натискання 24x24 px (WCAG 2.2, критерій 2.5.8) */
+.scenario-pagination .swiper-pagination-bullet {
+  width: 24px;
+  height: 24px;
+  margin: 0;
+  background: transparent;
+  opacity: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.scenario-pagination .swiper-pagination-bullet::before {
+  content: '';
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--swiper-pagination-bullet-inactive-color);
+  opacity: 0.6;
+}
+
+.scenario-pagination .swiper-pagination-bullet-active::before {
+  background: var(--swiper-theme-color);
+  opacity: 1;
+}

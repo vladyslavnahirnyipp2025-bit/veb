@@ -11,17 +11,17 @@
 ## Технології
 
 - HTML5 (семантичні теги `header`, `main`, `section`, `article`, `aside`, `footer`)
-- Tailwind CSS (CDN) + невеликий файл `custom-styles.css`
+- Tailwind CSS 3.4 (збирається Tailwind CLI в `assets/css/styles.css`) + невеликий файл `custom-styles.css`
 - Vanilla JavaScript (мобільне меню, валідація форми, модальне вікно)
 - Плагіни через CDN (ЛР №10): Swiper 11.1.14, Fancybox 5.0.36, Typed.js 2.1.0
-- Google Fonts (Inter, Montserrat), Font Awesome 6
+- Google Fonts (Inter, Montserrat), іконки як вбудований SVG-спрайт
 
 ## Запуск локально
 
 1. Клонувати репозиторій: `git clone <посилання на репозиторій>`
 2. Відкрити папку у VS Code: File → Open Folder.
 3. Правою кнопкою на `index.html` → Open with Live Server (розширення Live Server).
-   Можна й просто відкрити `index.html` у браузері. Потрібен інтернет: Tailwind, шрифти й іконки підключені через CDN.
+   Можна й просто відкрити `index.html` у браузері. Потрібен інтернет: шрифти та плагіни підключені через CDN.
 
 ## Структура
 
@@ -88,3 +88,34 @@ CSS плагінів підключено в `<head>`, JS із `defer` пере�
 підмінений `select`, відсутній елемент DOM, пошкоджене збереження. Дані користувача виводяться лише через `textContent`.
 
 Логіка в `assets/js/savings-calc.js` (без DOM), зв'язок зі сторінкою в `assets/js/widget.js`. Автотести: `node --test tests/savings-calc.test.js`.
+
+## Аудит і CI/CD (ЛР №12)
+
+Збірка CSS: `npm install`, потім `npm run build:css` (результат лежить у `assets/css/styles.css` і закомічений, тож для публікації збірка не потрібна).
+Тести: `npm test`.
+
+### Lighthouse (мобільний режим, локальний сервер, медіана трьох запусків)
+
+| Показник | До | Після |
+|---|---|---|
+| Performance | 64 | 100 |
+| Accessibility | 100 | 100 |
+| Best Practices | 100 | 100 |
+| SEO | 100 | 100 |
+| LCP | 6,2 с | 1,6 с |
+| FCP | 5,5 с | 1,1 с |
+| Передано даних | 725 КіБ | 328 КіБ |
+| Запитів | 27 | 22 |
+
+Що змінено: Tailwind CDN-скрипт замінено зібраним CSS (17 КіБ замість 124 КіБ JS); Font Awesome (близько 290 КіБ шрифтів заради 9 іконок)
+замінено SVG-спрайтом; CSS Swiper, Fancybox і Google Fonts завантажуються без блокування відображення; hero-зображення отримало
+`fetchpriority="high"`. Після оптимізації знайдено й виправлено: невідповідність видимого тексту та `aria-label` у соцмережах,
+крапки пагінації слайдера менші за 24 px.
+
+Заміри зроблено на локальному сервері. На Vercel значення можуть відрізнятися, тому для звіту повторіть аудит на опублікованій версії.
+
+### CI/CD
+
+`.github/workflows/deploy.yml` запускається після push у `main`: `npm ci`, тести, збірка CSS із перевіркою, що результат актуальний,
+публікація на Vercel. Потрібен секрет `VERCEL_TOKEN` (GitHub: Settings → Secrets and variables → Actions).
+`vercel.json` задає кеш для `assets/` і базові заголовки безпеки.
