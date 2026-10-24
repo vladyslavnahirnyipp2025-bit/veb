@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // ---------- Пошук елементів: якщо чогось немає, віджет тихо не запускається ----------
   const NUMERIC = ['income', 'expenses', 'term'];
   const ids = [
-    'savingsForm', 'rate', 'compound', 'saveStatus', 'expensesWarning', 'expensesWarningText',
+    'savingsForm', 'rate', 'rateError', 'compound', 'saveStatus', 'expensesWarning', 'expensesWarningText',
     'resultTotal', 'resultTerm', 'resultMonthly', 'resultDeposits', 'resultInterest', 'resultNote',
     'savingsChart', 'chartLine'
   ];
@@ -103,7 +103,10 @@ document.addEventListener('DOMContentLoaded', () => {
     let allValid = true;
 
     NUMERIC.forEach((field) => {
-      const result = Calc.validate(field, el[field].value);
+      // Якщо браузер не зміг розпізнати введене (наприклад, "1e" чи "e5e"), value порожнє, але є badInput:
+      // тоді показуємо «некоректне число», а не «введіть число»
+      const raw = el[field].validity && el[field].validity.badInput ? 'NaN' : el[field].value;
+      const result = Calc.validate(field, raw);
       if (result.ok) {
         clearError(field);
         showNote(field, result.note);
