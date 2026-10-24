@@ -1,0 +1,18 @@
+{
+  "name": "potik-monet",
+  "version": "1.0.0",
+  "description": "Лендинг «Потік монет» (навчальний проєкт, ЛР №5-№12)",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "build:css": "tailwindcss -c tailwind.config.js -i src/input.css -o assets/css/styles.css --minify",
+    "test": "node --test tests/savings-calc.test.js"
+  },
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "tailwindcss": "^3.4.17"
+  },
+  "private": true
+}
