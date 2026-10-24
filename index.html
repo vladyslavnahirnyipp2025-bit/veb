@@ -20,9 +20,11 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@500;600;700&display=swap" rel="stylesheet">
 
-  <!-- ЛР №10: CSS плагінів через CDN підключається в <head>, до власних стилів -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11.1.14/swiper-bundle.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.36/dist/fancybox/fancybox.css">
+  <!-- ЛР №10: CSS плагінів через CDN. Слайдер і галерея нижче першого екрана, тому CSS завантажується без блокування відображення (media="print" + onload) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11.1.14/swiper-bundle.min.css" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11.1.14/swiper-bundle.min.css"></noscript>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.36/dist/fancybox/fancybox.css" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.36/dist/fancybox/fancybox.css"></noscript>
 
   <!-- Стилі: Tailwind зібрано Tailwind CLI в один мінімізований файл (npm run build:css), разом із custom-styles.css.
        Раніше Tailwind підключався CDN-скриптом (124 КіБ JS, що блокує відображення). Конфігурація теми: tailwind.config.js -->
@@ -91,7 +93,7 @@
           </ul>
         </div>
         <!-- Hero-зображення чисто декоративне, тому alt порожній -->
-        <img class="w-full rounded-xl border border-line" src="assets/images/hero-bg.webp" alt="" width="1024" height="572">
+        <img class="w-full rounded-xl border border-line" src="assets/images/hero-bg.webp" alt="" width="1024" height="572" fetchpriority="high">
       </div>
     </section>
 
@@ -512,10 +514,10 @@
           <address class="not-italic">
             <a class="inline-block py-1 text-slate-400 transition-colors hover:text-brand" href="mailto:hello@potik-monet.example">hello@potik-monet.example</a>
           </address>
-          <ul class="mt-4 flex gap-4">
-            <li><a class="grid size-11 place-items-center rounded-full border border-line text-slate-400 transition-colors hover:text-brand" href="#top" aria-label="Instagram"><span class="text-sm font-semibold" aria-hidden="true">IG</span></a></li>
-            <li><a class="grid size-11 place-items-center rounded-full border border-line text-slate-400 transition-colors hover:text-brand" href="#top" aria-label="Facebook"><span class="text-sm font-semibold" aria-hidden="true">FB</span></a></li>
-            <li><a class="grid size-11 place-items-center rounded-full border border-line text-slate-400 transition-colors hover:text-brand" href="#top" aria-label="Telegram"><span class="text-sm font-semibold" aria-hidden="true">TG</span></a></li>
+          <ul class="mt-4 flex flex-wrap gap-3">
+            <li><a class="inline-flex min-h-11 items-center rounded-full border border-line px-4 text-sm text-slate-400 transition-colors hover:text-brand" href="#top">Instagram</a></li>
+            <li><a class="inline-flex min-h-11 items-center rounded-full border border-line px-4 text-sm text-slate-400 transition-colors hover:text-brand" href="#top">Facebook</a></li>
+            <li><a class="inline-flex min-h-11 items-center rounded-full border border-line px-4 text-sm text-slate-400 transition-colors hover:text-brand" href="#top">Telegram</a></li>
           </ul>
         </div>
       </div>
