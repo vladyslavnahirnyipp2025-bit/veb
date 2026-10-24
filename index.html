@@ -23,6 +23,10 @@
   <!-- Іконки Font Awesome 6 -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
+  <!-- ЛР №10: CSS плагінів через CDN підключається в <head>, до власних стилів -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11.1.14/swiper-bundle.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.36/dist/fancybox/fancybox.css">
+
   <!-- Tailwind CSS (CDN, як вимагає методичка) -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -418,6 +422,12 @@
       <button id="closeModalBtn" class="mt-6 inline-flex min-h-11 w-full items-center justify-center rounded-full bg-brand px-8 py-3 text-lg font-semibold text-ink transition-colors duration-150 hover:bg-brand-hover hover:shadow-soft active:bg-brand-pressed active:shadow-none" type="button">Закрити</button>
     </div>
   </div>
+
+  <!-- ЛР №10: JS плагінів через CDN підключається перед </body> (defer зберігає порядок виконання) -->
+  <script src="https://cdn.jsdelivr.net/npm/swiper@11.1.14/swiper-bundle.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.36/dist/fancybox/fancybox.umd.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.1.0/dist/typed.umd.js" defer></script>
+  <script src="assets/js/plugins.js" defer></script>
 
   <!-- Валідація форми зворотного зв'язку -->
   <script src="assets/js/validation.js"></script>
