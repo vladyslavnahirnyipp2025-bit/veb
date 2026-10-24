@@ -259,31 +259,93 @@
       </div>
     </section>
 
-    <!-- 7. ВІДГУКИ: поки що заглушки, бо сервіс новий і реальних відгуків немає -->
-    <section class="bg-ink py-16 md:py-24" id="testimonials" aria-labelledby="testimonials-title">
+    <!-- 7. СЦЕНАРІЇ НАКОПИЧЕНЬ: слайдер Swiper (ЛР №10). Замість вигаданих відгуків тут умовні приклади,
+         які рахуються за тією ж формулою, що й симулятор: (дохід − витрати) × термін -->
+    <section class="bg-ink py-16 md:py-24" id="scenarios" aria-labelledby="scenarios-title">
       <div class="mx-auto w-full max-w-[1200px] px-4">
-        <h2 class="mb-12 text-center font-heading text-2xl font-semibold md:text-3xl lg:text-[2rem]" id="testimonials-title">Відгуки користувачів</h2>
-        <div class="grid grid-cols-1 gap-6 md:grid-cols-3 lg:gap-8">
-          <article class="flex flex-col gap-4 rounded-xl border border-line bg-card p-6 sm:p-8">
-            <blockquote class="italic">
-              <p>Текст відгуку користувача</p>
-            </blockquote>
-            <p class="mt-auto flex items-center gap-2 text-slate-400"><i class="fa-regular fa-circle-user text-brand" aria-hidden="true"></i> Ім'я користувача</p>
-          </article>
-          <article class="flex flex-col gap-4 rounded-xl border border-line bg-card p-6 sm:p-8">
-            <blockquote class="italic">
-              <p>Текст відгуку користувача</p>
-            </blockquote>
-            <p class="mt-auto flex items-center gap-2 text-slate-400"><i class="fa-regular fa-circle-user text-brand" aria-hidden="true"></i> Ім'я користувача</p>
-          </article>
-          <article class="flex flex-col gap-4 rounded-xl border border-line bg-card p-6 sm:p-8">
-            <blockquote class="italic">
-              <p>Текст відгуку користувача</p>
-            </blockquote>
-            <p class="mt-auto flex items-center gap-2 text-slate-400"><i class="fa-regular fa-circle-user text-brand" aria-hidden="true"></i> Ім'я користувача</p>
-          </article>
+        <h2 class="mb-4 text-center font-heading text-2xl font-semibold md:text-3xl lg:text-[2rem]" id="scenarios-title">Приклади сценаріїв накопичення</h2>
+        <p class="mb-12 text-center text-slate-400">Умовні приклади без відсотків. Підставте свої числа в симулятор вище.</p>
+
+        <div class="swiper scenario-swiper" aria-roledescription="карусель" aria-label="Сценарії накопичення">
+          <div class="swiper-wrapper">
+          <div class="swiper-slide !h-auto">
+            <article class="flex h-full flex-col gap-4 rounded-xl border border-line bg-card p-6 sm:p-8">
+              <h3 class="font-heading text-xl font-medium leading-tight">Студент</h3>
+              <dl class="grid gap-2 text-sm">
+                <div class="flex justify-between gap-4"><dt class="text-slate-400">Дохід на місяць</dt><dd>12 000 грн</dd></div>
+                <div class="flex justify-between gap-4"><dt class="text-slate-400">Витрати на місяць</dt><dd>9 000 грн</dd></div>
+                <div class="flex justify-between gap-4"><dt class="text-slate-400">Термін</dt><dd>12 міс.</dd></div>
+              </dl>
+              <p class="mt-auto text-sm text-slate-400">Накопичення за цей час
+                <strong class="mt-1 block font-heading text-2xl font-semibold text-brand">36 000 грн</strong>
+              </p>
+            </article>
+          </div>
+          <div class="swiper-slide !h-auto">
+            <article class="flex h-full flex-col gap-4 rounded-xl border border-line bg-card p-6 sm:p-8">
+              <h3 class="font-heading text-xl font-medium leading-tight">Молодий спеціаліст</h3>
+              <dl class="grid gap-2 text-sm">
+                <div class="flex justify-between gap-4"><dt class="text-slate-400">Дохід на місяць</dt><dd>30 000 грн</dd></div>
+                <div class="flex justify-between gap-4"><dt class="text-slate-400">Витрати на місяць</dt><dd>20 000 грн</dd></div>
+                <div class="flex justify-between gap-4"><dt class="text-slate-400">Термін</dt><dd>24 міс.</dd></div>
+              </dl>
+              <p class="mt-auto text-sm text-slate-400">Накопичення за цей час
+                <strong class="mt-1 block font-heading text-2xl font-semibold text-brand">240 000 грн</strong>
+              </p>
+            </article>
+          </div>
+          <div class="swiper-slide !h-auto">
+            <article class="flex h-full flex-col gap-4 rounded-xl border border-line bg-card p-6 sm:p-8">
+              <h3 class="font-heading text-xl font-medium leading-tight">Фрилансер</h3>
+              <dl class="grid gap-2 text-sm">
+                <div class="flex justify-between gap-4"><dt class="text-slate-400">Дохід на місяць</dt><dd>45 000 грн</dd></div>
+                <div class="flex justify-between gap-4"><dt class="text-slate-400">Витрати на місяць</dt><dd>30 000 грн</dd></div>
+                <div class="flex justify-between gap-4"><dt class="text-slate-400">Термін</dt><dd>18 міс.</dd></div>
+              </dl>
+              <p class="mt-auto text-sm text-slate-400">Накопичення за цей час
+                <strong class="mt-1 block font-heading text-2xl font-semibold text-brand">270 000 грн</strong>
+              </p>
+            </article>
+          </div>
+          <div class="swiper-slide !h-auto">
+            <article class="flex h-full flex-col gap-4 rounded-xl border border-line bg-card p-6 sm:p-8">
+              <h3 class="font-heading text-xl font-medium leading-tight">Сім'я з дитиною</h3>
+              <dl class="grid gap-2 text-sm">
+                <div class="flex justify-between gap-4"><dt class="text-slate-400">Дохід на місяць</dt><dd>60 000 грн</dd></div>
+                <div class="flex justify-between gap-4"><dt class="text-slate-400">Витрати на місяць</dt><dd>48 000 грн</dd></div>
+                <div class="flex justify-between gap-4"><dt class="text-slate-400">Термін</dt><dd>36 міс.</dd></div>
+              </dl>
+              <p class="mt-auto text-sm text-slate-400">Накопичення за цей час
+                <strong class="mt-1 block font-heading text-2xl font-semibold text-brand">432 000 грн</strong>
+              </p>
+            </article>
+          </div>
+          <div class="swiper-slide !h-auto">
+            <article class="flex h-full flex-col gap-4 rounded-xl border border-line bg-card p-6 sm:p-8">
+              <h3 class="font-heading text-xl font-medium leading-tight">Відпустка влітку</h3>
+              <dl class="grid gap-2 text-sm">
+                <div class="flex justify-between gap-4"><dt class="text-slate-400">Дохід на місяць</dt><dd>25 000 грн</dd></div>
+                <div class="flex justify-between gap-4"><dt class="text-slate-400">Витрати на місяць</dt><dd>21 000 грн</dd></div>
+                <div class="flex justify-between gap-4"><dt class="text-slate-400">Термін</dt><dd>10 міс.</dd></div>
+              </dl>
+              <p class="mt-auto text-sm text-slate-400">Накопичення за цей час
+                <strong class="mt-1 block font-heading text-2xl font-semibold text-brand">40 000 грн</strong>
+              </p>
+            </article>
+          </div>
+          </div>
         </div>
-        <p class="mt-8 text-center text-xs text-slate-400">Це заглушки. Реальних відгуків поки немає, сервіс новий.</p>
+
+        <!-- Керування слайдером винесено за межі .swiper, щоб не перекривати картки -->
+        <div class="mt-8 flex items-center justify-between gap-4">
+          <button type="button" class="scenario-prev inline-flex size-11 items-center justify-center rounded-full border border-line text-slate-50 transition-colors hover:bg-card" aria-label="Попередній сценарій">
+            <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
+          </button>
+          <div class="scenario-pagination flex flex-1 items-center justify-center"></div>
+          <button type="button" class="scenario-next inline-flex size-11 items-center justify-center rounded-full border border-line text-slate-50 transition-colors hover:bg-card" aria-label="Наступний сценарій">
+            <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+          </button>
+        </div>
       </div>
     </section>
 

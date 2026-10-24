@@ -33,3 +33,16 @@
     transition: none !important;
   }
 }
+
+/* 4. Swiper (ЛР №10): кольори з дизайн-системи та зручні цілі для дотику */
+:root {
+  --swiper-theme-color: #2DD4BF;
+  --swiper-pagination-bullet-size: 12px;
+  --swiper-pagination-bullet-horizontal-gap: 8px;
+  --swiper-pagination-bullet-inactive-color: #94A3B8;
+  --swiper-pagination-bullet-inactive-opacity: 0.6;
+}
+
+.scenario-pagination {
+  position: static;
+}
