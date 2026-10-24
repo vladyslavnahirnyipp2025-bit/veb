@@ -20,9 +20,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Montserrat:wght@500;600;700&display=swap" rel="stylesheet">
 
-  <!-- Іконки Font Awesome 6 -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
   <!-- ЛР №10: CSS плагінів через CDN підключається в <head>, до власних стилів -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11.1.14/swiper-bundle.min.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0.36/dist/fancybox/fancybox.css">
@@ -32,6 +29,16 @@
   <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body class="bg-ink font-sans text-base leading-relaxed text-slate-50">
+  <!-- SVG-спрайт іконок: замінив Font Awesome (близько 290 КіБ шрифтів заради 9 іконок). Іконки декоративні, aria-hidden -->
+  <svg class="absolute size-0 overflow-hidden" aria-hidden="true" focusable="false">
+    <symbol id="i-arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-bars" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h16"/></symbol>
+    <symbol id="i-chevron-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></symbol>
+    <symbol id="i-chevron-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></symbol>
+    <symbol id="i-circle-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l3 3 5-6"/></symbol>
+    <symbol id="i-warning" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4l9 16H3z"/><path d="M12 10v4M12 17h.01"/></symbol>
+  </svg>
+
   <!-- Посилання для користувачів клавіатури та скрінрідерів -->
   <a class="sr-only rounded-lg bg-brand px-4 py-2 font-semibold text-ink focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50" href="#main">Перейти до основного вмісту</a>
 
@@ -45,7 +52,7 @@
       </a>
 
       <button id="menu-toggle" type="button" class="inline-flex size-11 items-center justify-center rounded-lg border border-line text-slate-50 transition-colors hover:bg-card lg:hidden" aria-expanded="false" aria-controls="site-menu" aria-label="Відкрити меню">
-        <i class="fa-solid fa-bars text-xl" aria-hidden="true"></i>
+        <svg class="size-6" aria-hidden="true" focusable="false"><use href="#i-bars"/></svg>
       </button>
 
       <div id="site-menu" class="hidden basis-full flex-col gap-4 lg:flex lg:basis-auto lg:flex-1 lg:flex-row lg:items-center lg:justify-end lg:gap-6 xl:gap-8">
@@ -79,8 +86,8 @@
             <a class="inline-flex min-h-11 w-full items-center justify-center rounded-full bg-brand px-8 py-3 text-lg font-semibold text-ink transition-colors duration-150 hover:bg-brand-hover hover:shadow-soft active:bg-brand-pressed active:shadow-none md:w-auto" href="#simulator">Спробувати симулятор без реєстрації</a>
           </p>
           <ul class="flex flex-wrap gap-x-6 gap-y-2 text-sm text-slate-400">
-            <li><i class="fa-solid fa-circle-check text-brand" aria-hidden="true"></i> без реєстрації</li>
-            <li><i class="fa-solid fa-circle-check text-brand" aria-hidden="true"></i> безкоштовно</li>
+            <li><svg class="inline-block size-4 align-[-0.15em] text-brand" aria-hidden="true" focusable="false"><use href="#i-circle-check"/></svg> без реєстрації</li>
+            <li><svg class="inline-block size-4 align-[-0.15em] text-brand" aria-hidden="true" focusable="false"><use href="#i-circle-check"/></svg> безкоштовно</li>
           </ul>
         </div>
         <!-- Hero-зображення чисто декоративне, тому alt порожній -->
@@ -121,17 +128,17 @@
           <article class="flex flex-col gap-4 rounded-xl border border-line bg-card p-6 sm:p-8">
             <h3 class="font-heading text-xl font-medium leading-tight md:text-2xl">Симулятор накопичень</h3>
             <p class="text-slate-400">Три повзунки: дохід, витрати й термін. Сума заощаджень і дата цілі видно одразу.</p>
-            <a class="mt-auto inline-flex min-h-11 items-center font-semibold text-brand transition-colors hover:text-brand-hover" href="#simulator">Відкрити симулятор <i class="fa-solid fa-arrow-right ml-2" aria-hidden="true"></i></a>
+            <a class="mt-auto inline-flex min-h-11 items-center font-semibold text-brand transition-colors hover:text-brand-hover" href="#simulator">Відкрити симулятор <svg class="ml-2 size-4" aria-hidden="true" focusable="false"><use href="#i-arrow-right"/></svg></a>
           </article>
           <article class="flex flex-col gap-4 rounded-xl border border-line bg-card p-6 sm:p-8">
             <h3 class="font-heading text-xl font-medium leading-tight md:text-2xl">План на пошту</h3>
             <p class="text-slate-400">Надішліть розрахунок на свою електронну адресу, щоб повернутися до нього пізніше.</p>
-            <a class="mt-auto inline-flex min-h-11 items-center font-semibold text-brand transition-colors hover:text-brand-hover" href="#plan">Отримати план <i class="fa-solid fa-arrow-right ml-2" aria-hidden="true"></i></a>
+            <a class="mt-auto inline-flex min-h-11 items-center font-semibold text-brand transition-colors hover:text-brand-hover" href="#plan">Отримати план <svg class="ml-2 size-4" aria-hidden="true" focusable="false"><use href="#i-arrow-right"/></svg></a>
           </article>
           <article class="flex flex-col gap-4 rounded-xl border border-line bg-card p-6 sm:p-8">
             <h3 class="font-heading text-xl font-medium leading-tight md:text-2xl">Наочний графік</h3>
             <p class="text-slate-400">Зростання накопичень показано на графіку, тож різні сценарії легко порівняти.</p>
-            <a class="mt-auto inline-flex min-h-11 items-center font-semibold text-brand transition-colors hover:text-brand-hover" href="#simulator">Подивитися графік <i class="fa-solid fa-arrow-right ml-2" aria-hidden="true"></i></a>
+            <a class="mt-auto inline-flex min-h-11 items-center font-semibold text-brand transition-colors hover:text-brand-hover" href="#simulator">Подивитися графік <svg class="ml-2 size-4" aria-hidden="true" focusable="false"><use href="#i-arrow-right"/></svg></a>
           </article>
         </div>
       </div>
@@ -197,7 +204,7 @@
                 </div>
                 <p class="hidden text-sm text-red-400" id="expensesError" role="alert"></p>
                 <p class="hidden text-xs text-slate-400" id="expensesNote"></p>
-                <p class="hidden items-center gap-2 text-xs text-warning" id="expensesWarning" role="status"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i> <span id="expensesWarningText"></span></p>
+                <p class="hidden items-center gap-2 text-xs text-warning" id="expensesWarning" role="status"><svg class="size-4 shrink-0" aria-hidden="true" focusable="false"><use href="#i-warning"/></svg> <span id="expensesWarningText"></span></p>
               </div>
 
               <div class="grid gap-2">
@@ -353,11 +360,11 @@
         <!-- Керування слайдером винесено за межі .swiper, щоб не перекривати картки -->
         <div class="mt-8 flex items-center justify-between gap-4">
           <button type="button" class="scenario-prev inline-flex size-11 items-center justify-center rounded-full border border-line text-slate-50 transition-colors hover:bg-card" aria-label="Попередній сценарій">
-            <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
+            <svg class="size-5" aria-hidden="true" focusable="false"><use href="#i-chevron-left"/></svg>
           </button>
           <div class="scenario-pagination flex flex-1 items-center justify-center"></div>
           <button type="button" class="scenario-next inline-flex size-11 items-center justify-center rounded-full border border-line text-slate-50 transition-colors hover:bg-card" aria-label="Наступний сценарій">
-            <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+            <svg class="size-5" aria-hidden="true" focusable="false"><use href="#i-chevron-right"/></svg>
           </button>
         </div>
       </div>
@@ -506,9 +513,9 @@
             <a class="inline-block py-1 text-slate-400 transition-colors hover:text-brand" href="mailto:hello@potik-monet.example">hello@potik-monet.example</a>
           </address>
           <ul class="mt-4 flex gap-4">
-            <li><a class="grid size-11 place-items-center rounded-full border border-line text-slate-400 transition-colors hover:text-brand" href="#top" aria-label="Instagram"><i class="fa-brands fa-instagram text-xl" aria-hidden="true"></i></a></li>
-            <li><a class="grid size-11 place-items-center rounded-full border border-line text-slate-400 transition-colors hover:text-brand" href="#top" aria-label="Facebook"><i class="fa-brands fa-facebook text-xl" aria-hidden="true"></i></a></li>
-            <li><a class="grid size-11 place-items-center rounded-full border border-line text-slate-400 transition-colors hover:text-brand" href="#top" aria-label="Telegram"><i class="fa-brands fa-telegram text-xl" aria-hidden="true"></i></a></li>
+            <li><a class="grid size-11 place-items-center rounded-full border border-line text-slate-400 transition-colors hover:text-brand" href="#top" aria-label="Instagram"><span class="text-sm font-semibold" aria-hidden="true">IG</span></a></li>
+            <li><a class="grid size-11 place-items-center rounded-full border border-line text-slate-400 transition-colors hover:text-brand" href="#top" aria-label="Facebook"><span class="text-sm font-semibold" aria-hidden="true">FB</span></a></li>
+            <li><a class="grid size-11 place-items-center rounded-full border border-line text-slate-400 transition-colors hover:text-brand" href="#top" aria-label="Telegram"><span class="text-sm font-semibold" aria-hidden="true">TG</span></a></li>
           </ul>
         </div>
       </div>
@@ -523,7 +530,7 @@
        role="dialog" + aria-modal + aria-labelledby/aria-describedby: доступність для скрінрідерів -->
   <div id="successModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/70 p-4" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalText">
     <div class="w-full max-w-md rounded-xl border border-line bg-card p-8 text-center text-slate-50 shadow-soft">
-      <i class="fa-solid fa-circle-check text-5xl text-brand" aria-hidden="true"></i>
+      <svg class="size-12 text-brand" aria-hidden="true" focusable="false"><use href="#i-circle-check"/></svg>
       <h2 class="mt-4 font-heading text-2xl font-semibold" id="modalTitle">Дякуємо!</h2>
       <p class="mt-2 text-slate-400" id="modalText">Форма успішно пройшла клієнтську валідацію. Це демонстрація: дані нікуди не надсилаються.</p>
       <button id="closeModalBtn" class="mt-6 inline-flex min-h-11 w-full items-center justify-center rounded-full bg-brand px-8 py-3 text-lg font-semibold text-ink transition-colors duration-150 hover:bg-brand-hover hover:shadow-soft active:bg-brand-pressed active:shadow-none" type="button">Закрити</button>
