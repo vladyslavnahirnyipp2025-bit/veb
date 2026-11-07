@@ -76,8 +76,15 @@
   <main id="main">
 
     <!-- 1. HERO -->
-    <section class="bg-ink py-12 md:py-16" id="top" aria-labelledby="hero-title">
-      <div class="mx-auto grid w-full max-w-[1200px] items-center gap-8 px-4 lg:grid-cols-2 lg:gap-16">
+    <section class="relative isolate overflow-hidden bg-ink py-12 md:py-16 lg:py-24" id="top" aria-labelledby="hero-title">
+      <!-- Фон Hero: анімований GIF (декоративний, alt порожній). Для prefers-reduced-motion показується статичне зображення -->
+      <picture>
+        <source media="(prefers-reduced-motion: reduce)" srcset="assets/images/hero-bg.webp">
+        <img class="absolute inset-0 -z-20 size-full object-cover object-right" src="assets/images/hero-bg.gif" alt="" width="960" height="536" fetchpriority="high">
+      </picture>
+      <!-- Затемнення під текстом: на мобільному зверху вниз, від lg зліва направо -->
+      <div class="absolute inset-0 -z-10 bg-gradient-to-b from-ink/90 to-ink/60 lg:bg-gradient-to-r lg:from-ink lg:via-ink/80 lg:to-ink/10" aria-hidden="true"></div>
+      <div class="relative mx-auto grid w-full max-w-[1200px] items-center gap-8 px-4 lg:grid-cols-2 lg:gap-16">
         <div class="grid justify-items-start gap-6">
           <h1 class="font-heading text-3xl font-bold leading-tight md:text-4xl lg:text-5xl" id="hero-title">Розумне планування особистих заощаджень за кілька кліків</h1>
           <!-- Typed.js (ЛР №10): повний текст для скрінрідерів, анімований рядок для зору (aria-hidden).
@@ -93,8 +100,6 @@
             <li><svg class="inline-block size-4 align-[-0.15em] text-brand" aria-hidden="true" focusable="false"><use href="#i-circle-check"/></svg> безкоштовно</li>
           </ul>
         </div>
-        <!-- Hero-зображення чисто декоративне, тому alt порожній -->
-        <img class="w-full rounded-xl border border-line" src="assets/images/hero-bg.webp" alt="" width="1024" height="572" fetchpriority="high">
       </div>
     </section>
 
@@ -373,38 +378,7 @@
       </div>
     </section>
 
-    <!-- 8. ГАЛЕРЕЯ: Fancybox (ЛР №10). Зображення згруповані атрибутом data-fancybox, підпис береться з data-caption.
-         Це реальні знімки секцій цього сайту -->
-    <section class="theme-light bg-slate-50 py-16 text-ink md:py-24" id="gallery" aria-labelledby="gallery-title">
-      <div class="mx-auto w-full max-w-[1200px] px-4">
-        <h2 class="mb-4 text-center font-heading text-2xl font-semibold md:text-3xl lg:text-[2rem]" id="gallery-title">Як виглядає сервіс</h2>
-        <p class="mb-12 text-center text-slate-600">Натисніть на зображення, щоб відкрити його на весь екран і збільшити.</p>
-        <ul class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
-          <li>
-            <a class="block overflow-hidden rounded-xl border border-line shadow-lg transition-shadow duration-300 hover:shadow-soft" href="assets/images/gallery-hero.webp" data-fancybox="service-gallery" data-caption="Головний екран: заголовок і заклик до дії">
-              <img class="aspect-[4/3] w-full object-cover object-top" src="assets/images/gallery-hero.webp" alt="Головний екран: заголовок і заклик до дії" width="1280" height="520" loading="lazy">
-            </a>
-          </li>
-          <li>
-            <a class="block overflow-hidden rounded-xl border border-line shadow-lg transition-shadow duration-300 hover:shadow-soft" href="assets/images/gallery-benefits.webp" data-fancybox="service-gallery" data-caption="Секція переваг сервісу">
-              <img class="aspect-[4/3] w-full object-cover object-top" src="assets/images/gallery-benefits.webp" alt="Секція переваг сервісу" width="1280" height="590" loading="lazy">
-            </a>
-          </li>
-          <li>
-            <a class="block overflow-hidden rounded-xl border border-line shadow-lg transition-shadow duration-300 hover:shadow-soft" href="assets/images/gallery-how.webp" data-fancybox="service-gallery" data-caption="Як це працює: три кроки">
-              <img class="aspect-[4/3] w-full object-cover object-top" src="assets/images/gallery-how.webp" alt="Як це працює: три кроки" width="1280" height="514" loading="lazy">
-            </a>
-          </li>
-          <li>
-            <a class="block overflow-hidden rounded-xl border border-line shadow-lg transition-shadow duration-300 hover:shadow-soft" href="assets/images/gallery-simulator.webp" data-fancybox="service-gallery" data-caption="Симулятор накопичень">
-              <img class="aspect-[4/3] w-full object-cover object-top" src="assets/images/gallery-simulator.webp" alt="Симулятор накопичень" width="1280" height="768" loading="lazy">
-            </a>
-          </li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- 9. ЗАКЛИК ДО ДІЇ (CTA) -->
+    <!-- 8. ЗАКЛИК ДО ДІЇ (CTA) -->
     <section class="bg-brand-strong py-16 text-white md:py-20" id="cta" aria-labelledby="cta-title">
       <div class="mx-auto flex w-full max-w-[900px] flex-col items-center gap-6 px-4 text-center">
         <h2 class="font-heading text-2xl font-semibold md:text-3xl lg:text-4xl" id="cta-title">Почніть планувати заощадження вже сьогодні</h2>
